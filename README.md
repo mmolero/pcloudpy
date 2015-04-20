@@ -13,6 +13,9 @@ The main features of the pcloudpy module are the following:
 - Selection and Cleaning of point clouds
 
 
+-------
+
+![](resources/pcloudpy_tunnel.png)
 
 
 
