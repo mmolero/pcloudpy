@@ -4,7 +4,10 @@ Point Cloud Viewer and Processing Toolkit in Python
 
 
 This toolkit aims at providing an ease interface to display point clouds in many formats and performing diverse filtering processes. 
-The project goal is to take advantage of amazing libraries such as numpy, scipy, matplotlib, vtk, pandas, sklearn, laspy, pyside and so on to be used in the display and processing of point clouds.
+This project goal is to make use of amazing libraries such as numpy, scipy, matplotlib, IPython, VTK, pandas, sklearn, laspy, pyside, pyqode and so on to be used in the display and processing of point clouds.
+pcloudpy project is highly inspired in Paraview, MeshLab, CloudCompare, FreeCad, PCL and it offers an alternative to add modules written in python easily. 
+An IPython Console and an Python Editor are also available.
+
 
 -------
 
@@ -14,6 +17,7 @@ The main features of the pcloudpy module are the following:
 - Selection and Cleaning of point clouds
 - Filtering of point clouds
 - Delaunay Triangulations
+- Interaction with pcloudpy modules from an embedded IPython Console
 
 
 -------
