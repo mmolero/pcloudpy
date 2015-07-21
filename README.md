@@ -22,7 +22,7 @@ The main features of the pcloudpy module are the following:
 
 -------
 
-![](https://github.com/mmolero/pcloudpy/tree/master/resources/pcloudpy_v0.10.png)
+![](github.com/mmolero/pcloudpy/tree/master/resources/pcloudpy_v0.10.png)
 
 
 
