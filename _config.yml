@@ -1,4 +1,28 @@
-name: pcloudpy 
-markdown: redcarpet
-pygments: true
-baseurl: /index
+port: 4000
+safe: false
+
+
+### site serving configuration ###
+exclude: [CNAME, README.md, .gitignore]
+permalink: /index ## disables post output
+timezone: null
+lsi: false
+markdown: kramdown
+highlighter: pygments
+
+### content configuration ###
+title:       "pcloudpy documentation"
+keywords:    "pcloudpy, python"
+description: "Comments about pcloudpy"
+source_link: "https://github.com/mmolero/pcloudpy"
+
+
+### template colors, used site-wide via css ###
+colors:
+  black:     '#111111'
+  white:     '#f8f8f8'
+  blue:      '#49a7e9'
+  green:     '#9bcf2f'
+  purple:    '#c869bf'
+  orange:    '#fab125'
+  turquoise: '#0fbfcf'
