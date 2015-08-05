@@ -1,1 +1,1 @@
-__author__ = 'Miguel'
+from gui import app

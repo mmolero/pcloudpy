@@ -1,0 +1,34 @@
+<RCC>
+  <qresource>
+      <file alias="pcloudpy.png">icons/pcloudpy.png</file>
+      <file alias="pcloudpy-name.png">icons/pcloudpy-name.png</file>
+      <file alias="vline.png">icons/vline.png</file>
+      <file alias="branch-more.png">icons/branch-more.png</file>
+      <file alias="branch-open.png">icons/branch-open.png</file>
+      <file alias="branch-closed.png">icons/branch-closed.png</file>
+      <file alias="branch-end.png">icons/branch-end.png</file>
+      <file alias="Toolbox-50.png">icons/Toolbox-50.png</file>
+      <file alias="toolbox-icon.png">icons/toolbox-icon.png</file>
+      <file alias="pqServer16.png">icons/pqServer16.png</file>
+      <file alias="pqEyeball16.png">icons/pqEyeball16.png</file>
+      <file alias="pqEyeballd16.png">icons/pqEyeballd16.png</file>
+      <file alias="pqXMinus24.png">icons/pqXMinus24.png</file>
+      <file alias="pqYMinus24.png">icons/pqYMinus24.png</file>
+      <file alias="pqZMinus24.png">icons/pqZMinus24.png</file>
+      <file alias="pqXPlus24.png">icons/pqXPlus24.png</file>
+      <file alias="pqYPlus24.png">icons/pqYPlus24.png</file>
+      <file alias="pqZPlus24.png">icons/pqZPlus24.png</file>
+      <file alias="pqDelete24.png">icons/pqDelete24.png</file>
+      <file alias="pqFilter32.png">icons/pqFilter32.png</file>
+      <file alias="pqResetCamera32.png">icons/pqResetCamera32.png</file>
+      <file alias="clean.png">icons/clean.png</file>
+      <file alias="pqSelectSurfPoints24.png">icons/pqSelectSurfPoints24.png</file>
+      <file alias="pqExtractSelection.png">icons/pqExtractSelection.png</file>
+      <file alias="trash_red_24.png">icons/trash_red_24.png</file>
+      <file alias="trash_24.png">icons/trash_24.png</file>
+      <file alias="clone.png">icons/clone.png</file>
+      <file alias="config_toolboxes.yaml">conf/config_toolboxes.yaml</file>
+      <file alias="about.md">about.md</file>
+
+  </qresource>
+</RCC>

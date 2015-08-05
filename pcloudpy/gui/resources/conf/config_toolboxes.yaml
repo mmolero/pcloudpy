@@ -1,0 +1,114 @@
+Import Data:
+
+    XYZ File:
+        type: reader
+        name: XYZ File 
+        message: Open XYZ File 
+        format: "*.xyz;;*.txt"
+        func: ReaderXYZ
+        enabled: 1
+        text : "**Open XYZ File**"
+        
+    LAS File:
+        type: reader
+        name: LAS File
+        message: Open LAS File 
+        format: "*.las"
+        func: ReaderLAS
+        enabled: 1
+        text : "**Open LAS File**"
+     
+    VTK File:
+        type: reader
+        name: VTK File
+        format: .vtp
+        message: Open VTP File 
+        format: "*.vtp"
+        func: ReaderVTP
+        enabled: 1
+        text : "Open VTP File"
+        
+    PLY File:
+        type: reader
+        name: PLY File
+        format: "*.ply"
+        message: Open PLY File
+        func: ReaderPLY
+        enabled: 1
+        text : "Open PLY File"
+        
+    TIFF File:
+        type: reader
+        name: TIFF File
+        format: "*.tif;; *.tiff"
+        message: Open TIFF File
+        func: ReaderTIFF
+        enabled: 1
+        text : "Open TIFF File"
+           
+Filters:
+
+    Statistical Outlier Removal Filter:
+        type: filter
+        enabled: 1
+        name: Statistical-Outlier-Removal-Filter
+        parms:
+            mean_k: QSpinBox
+            std_dev: QDoubleSpinBox
+            
+        text : |
+                
+                **Statistical Outlier Removal Filter** uses point neighborhood statistics to filter outlier data.
+                The algorithm iterates through the entire input twice:
+                
+                - During the first iteration it will update the average distance that each point has to its nearest k neighbors. The value of k can be set using mean-k. 
+                  Next, the mean and standard deviation of all these distances are computed in order to determine a distance threshold. 
+                  The distance threshold will be equal to: mean + std-dev-mult * stddev. The multiplier for the standard deviation can be set using std-dev-mult.
+                
+                - During the next iteration the points will be classified as inlier or outlier if their average neighbor distance is below or above this threshold respectively
+                
+
+        func: StatisticalOutlierRemovalFilter
+        
+       
+    Extract Extent Filter:
+        type: filter
+        enabled: 1
+        name: Extract-Extent-Filter
+        parms:
+            extent: Extent
+            
+        text : |
+            **Extract Extent Filter** uses a given extent to retrieve the points inside it.
+        
+        func: ExtractPolyData
+        
+     
+        
+    Delaunay 2D:
+        type: filter
+        name: Delaunay2D 
+        enabled: 1
+        parms:
+            alpha: QDoubleSpinBox
+            tolerance: QDoubleSpinBox
+            
+        text : |
+            **Delaunay2D** is a filter that constructs a 2D Delaunay triangulation from a list of input points.
+            
+        func: Delaunay2D 
+            
+    Delaunay 3D:
+        type: filter
+        name: Delaunay3D
+        enabled: 1
+        
+        parms :
+            alpha: QDoubleSpinBox
+            tolerance: QDoubleSpinBox
+            
+        text : |            
+            **Delaunay3D** is a filter that constructs a 3D Delaunay triangulation from a list of input points.
+
+        func: Delaunay3D
+            
