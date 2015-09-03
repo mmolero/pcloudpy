@@ -25,6 +25,8 @@ The main features of the pcloudpy module are the following:
 ![](https://github.com/mmolero/pcloudpy/blob/master/resources/pcloudpy_v0.10.png)
 
 ------
+
 if you are interesting in collaborating and/or testing this software, please don't hesitate to contact me
+
 ------
 
