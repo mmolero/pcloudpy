@@ -90,8 +90,7 @@ class StatisticalOutlierRemovalFilter(FilterBase):
         Compute filter.
         """
 
-        #nodes_vtk_array = self.input_.GetPoints().GetData()
-        array_full = numpy_from_polydata(self.input_, give_color=True)
+        array_full = numpy_from_polydata(self.input_)
 
         array = array_full[:,0:3]
         color = array_full[:,3:]
