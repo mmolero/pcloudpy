@@ -27,7 +27,7 @@ from components.FilterWidget import FilterWidget
 
 #from shell.PythonConsole import PythonConsole
 from shell.IPythonConsole import IPythonConsole
-#from shell.CodeEdit import CodeEdit
+from shell.CodeEdit import CodeEdit
 
 NAME = "pcloudpy"
 
@@ -35,10 +35,6 @@ NAME = "pcloudpy"
 class Info(object):
     version = "0.10"
     date = "05-08-2015"
-
-
-
-
 
 class MainWindowBase(QMainWindow):
     """
@@ -150,7 +146,7 @@ class MainWindowBase(QMainWindow):
         #Main Window
         self.workspaceLineEdit.textEdited.connect(self.editWorkSpace)
 
-        #self.code_edit.codeRequested.connect(self.console_widget.execute_code)
+        self.code_edit.codeRequested.connect(self.console_widget.execute_code)
 
     def setup_docks(self):
 
@@ -189,10 +185,10 @@ class MainWindowBase(QMainWindow):
         #Console
         self.tab_console = QTabWidget()
         self.console_widget = IPythonConsole(self, self.App)
-        #self.code_edit = CodeEdit()
+        self.code_edit = CodeEdit()
 
         self.tab_console.addTab(self.console_widget, "Console")
-        #self.tab_console.addTab(self.code_edit, "Editor")
+        self.tab_console.addTab(self.code_edit, "Editor")
 
         self.console_widget_dockwidget = QDockWidget(self.tr("IPython"))
         self.console_widget_dockwidget.setObjectName("Console-Dock")

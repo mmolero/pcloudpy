@@ -67,6 +67,13 @@ Filters:
                 
                 - During the next iteration the points will be classified as inlier or outlier if their average neighbor distance is below or above this threshold respectively
                 
+                For more information.
+
+                Statistical Outlier Removal Filter is a python implementation based on the pcl::StatisticalOutlierRemoval from Point Cloud Library
+                class pcl::StatisticalOutlierRemoval (Radu Bogdan Rusu)
+
+                R. B. Rusu, Z. C. Marton, N. Blodow, M. Dolha, and M. Beetz.
+                Towards 3D Point Cloud Based Object Maps for Household Environments Robotics and Autonomous Systems Journal (Special Issue on Semantic Knowledge), 2008.
 
         func: StatisticalOutlierRemovalFilter
         
@@ -111,4 +118,32 @@ Filters:
             **Delaunay3D** is a filter that constructs a 3D Delaunay triangulation from a list of input points.
 
         func: Delaunay3D
-            
+
+    Point Set Normals Estimation:
+        type: filter
+        name: PointSetNormalsEstimation
+        enabled: 1
+        parms:
+            number_neighbors : QSpinBox
+
+        text: |
+            **vtkPointSetNormalEstimation** filter estimates normals of a point set using a local best fit plane.
+
+            At every point in the point set, vtkPointSetNormalEstimation computes the best
+            fit plane of the set of points within a specified radius of the point (or a fixed number of neighbors).
+
+            The normal of this plane is used as an estimate of the normal of the surface that would go through
+            the points.
+
+            vtkPointSetNormalEstimation Class is a python implementation based on the version included in PointSetProcessing by
+            David Doria, see (https://github.com/daviddoria/PointSetProcessing)
+
+        func: vtkPointSetNormalsEstimation
+
+
+    Normals Visualization:
+        type: display
+        name: Normals Visualization
+        enabled: 1
+        text: Normal Vector Visualization. First, Normal estimation must be done
+        func: DisplayNormals

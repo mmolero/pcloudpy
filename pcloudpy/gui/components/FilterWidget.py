@@ -11,9 +11,9 @@ class FilterWidget(QScrollArea):
 
     filterRequested = Signal()
 
-    def set_filter(self, func, parms, text):
+    def set_filter(self, func, parms, text, only_apply=False):
         self.remove_filter()
-        widget = widget_generator(func=func, parms=parms, text=text)
+        widget = widget_generator(func=func, parms=parms, text=text, only_apply=only_apply)
         apply = widget.findChild(QPushButton, "apply")
         if apply:
             apply.pressed.connect(self.apply_widget)

@@ -45,17 +45,40 @@ class Extent(QtGui.QWidget):
                 float(self.zmin_lineedit.text()), float(self.zmax_lineedit.text()))
 
 
-def widget_generator(func, parms, text=""):
+def widget_generator(func, parms, text="", only_apply=False):
 
     class TemplateWidget(QtGui.QWidget):
-        def __init__(self, parent=None, func=None, parms=None, text=""):
+        def __init__(self, parent=None, func=None, parms=None, text="", only_apply=False):
             super(TemplateWidget, self).__init__(parent)
             self.parms = None
             self.func = func
-            if parms is not None:
-                self.init_params(parms, text)
+            self.only_apply = only_apply
+
+            if only_apply:
+                self.init_apply(text)
             else:
-                self.init_text(text)
+                if parms is not None:
+                    self.init_params(parms, text)
+                else:
+                    self.init_text(text)
+
+        def init_apply(self, text):
+            grid = QtGui.QGridLayout()
+
+            self.apply_button = QtGui.QPushButton("Apply")
+            self.apply_button.setObjectName("apply")
+            self.apply_button.setFixedSize(60,60)
+            grid.addWidget(self.apply_button, 0, 0)
+
+            html = markdown2.markdown(str(text))
+            textEdit = QtGui.QTextEdit(html)
+            textEdit.setMinimumWidth(350)
+            textEdit.setMinimumHeight(350)
+            textEdit.setReadOnly(True)
+            grid.addWidget(textEdit,1, 0, 1, 5)
+
+            self.setLayout(grid)
+
 
         def init_params(self, parms, text):
             self.parms = dict(parms)
@@ -106,6 +129,11 @@ def widget_generator(func, parms, text=""):
             self.setLayout(vBox)
 
         def get_parms(self):
+
+            if self.only_apply:
+
+                return self.func, dict()
+
             if self.parms:
                 d = dict()
                 for (k,v) in self.parms.iteritems():
@@ -116,4 +144,4 @@ def widget_generator(func, parms, text=""):
                         d[k] = item.value()
                 return self.func, d
 
-    return TemplateWidget(None, func, parms, text=text)
+    return TemplateWidget(None, func, parms, text=text, only_apply=only_apply)

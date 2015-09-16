@@ -50,6 +50,7 @@ class MainWindow(MainWindowBase):
         self.datasets_widget.filterRequested.connect(self.apply_filter)
 
         #FilterWidget
+        #Put in enable state "Apply Filter"
         self.filter_widget.filterRequested.connect(self.get_filter_parms)
 
         view = self.tab_view.currentWidget()
@@ -78,7 +79,7 @@ class MainWindow(MainWindowBase):
             props = layer.get_container().get_props()
             self.object_inspector_widget.update(props)
 
-    def select_item(self, new_item, old_item):
+    def select_item(self, new_item, _):
         items = new_item.indexes()
         if len(items)!=0:
             index = new_item.indexes()[0]
@@ -112,15 +113,25 @@ class MainWindow(MainWindowBase):
         layer.get_current_view().update_render()
 
     def manager_toolbox(self):
+        """
+        Method that manages the components of the toolboxes
+
+        - reader
+        - filter
+        - display
+
+        """
 
         item = self.toolboxes_widget.get_current_item()
         d = OrderedDict(item.metadata())
+        #
         if not d.has_key('type'):
             return
 
         if d['type'] == 'reader':
             self.filter_widget.remove_filter()
             self.filter_widget.set_filter(d['func'], None, d['text'])
+
             filenames, _ = QFileDialog.getOpenFileNames(self, d['message'], self.dir_path, d['format'])
             if filenames:
                 for filename in filenames:
@@ -130,10 +141,17 @@ class MainWindow(MainWindowBase):
         elif d['type'] == 'filter':
             self.filter_widget.set_filter(d['func'], d['parms'], d['text'])
 
-    def toolbox_item_selected(self):
+        elif d['type'] == 'display':
+            self.filter_widget.set_filter(d['func'], None, d['text'], only_apply=True)
 
+    def toolbox_item_selected(self):
+        """
+        Update the selected item in the toolbox manager
+
+        """
         item = self.toolboxes_widget.get_current_item()
         d = OrderedDict(item.metadata())
+
         if not d.has_key('type'):
             return
 
@@ -142,6 +160,10 @@ class MainWindow(MainWindowBase):
 
         elif d['type'] == 'filter':
             self.filter_widget.set_filter(d['func'], d['parms'], d['text'])
+
+        elif d['type'] == 'display':
+            self.filter_widget.set_filter(d['func'], None, d['text'], only_apply=True)
+
 
     def file_open(self):
         filters = "*.xyz;;*.txt;;*.las;;*.tif *.tiff;;*.vtp"
@@ -160,8 +182,8 @@ class MainWindow(MainWindowBase):
 
         self.setCursor(Qt.WaitCursor)
         QApplication.processEvents()
-        self.setCursor(Qt.WaitCursor)
         QApplication.processEvents()
+
 
         layer = self.datasets_widget.current_item.get_current_view().manager_layer[index]
         current_view = layer.get_current_view()
@@ -180,7 +202,13 @@ class MainWindow(MainWindowBase):
         data = layer_clone.get_container().get_data()
 
         if filter.set_input(data):
-            filter.update()
+            try:
+                filter.update()
+            except Exception as e:
+                q = QMessageBox(QMessageBox.Critical, "Error Message", e.message)
+                q.setStandardButtons(QMessageBox.Ok)
+                q.exec_()
+                return
         else:
             self.setCursor(Qt.ArrowCursor)
             QApplication.processEvents()
@@ -192,6 +220,7 @@ class MainWindow(MainWindowBase):
             return
         ###
 
+        #Update Actors
         layer_clone.get_container().set_polydata(filter.get_output())
         current_view.add_layer(layer_clone)
         current_view.update_render()
