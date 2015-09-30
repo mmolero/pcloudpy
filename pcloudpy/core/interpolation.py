@@ -61,14 +61,25 @@ def nearest_griddata(x, y, z, xi, yi):
     zi = nearest_griddata(x,y,z,xi,yi) fits a surface of the form z = f*(*x, y) to the data in the (usually) nonuniformly spaced vectors (x, y, z).<br/>
     griddata() interpolates this surface at the points specified by (xi, yi) to produce zi. xi and yi must describe a regular grid.<br/>
 
-    @param x    x-coord [1D array]
-    @param y    y-coord [1D array]
-    @param z    z-coord [1D array]
-    @param xi   meshgrid for x-coords [2D array] see <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.meshgrid.html">numpy.meshgrid</a>
-    @param yi   meshgrid for y-coords [2D array] see <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.meshgrid.html">numpy.meshgrid</a>
+    Parameters
+    ----------
+    x:  array-like
+        x-coord [1D array]
+    y:  array-like
+        y-coord [1D array]
+    z:  array-like
+        z-coord [1D array]
+    xi: array-like
+        meshgrid for x-coords [2D array] see <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.meshgrid.html">numpy.meshgrid</a>
+    yi: array-like
+        meshgrid for y-coords [2D array] see <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.meshgrid.html">numpy.meshgrid</a>
 
-    @return     Interpolated Zi Coord
-    @retval zi  zi interpolated-value [2D array]  for (xi,yi)
+    Returns
+    -------
+    Interpolated Zi Coord
+
+    zi: array-like
+        zi interpolated-value [2D array]  for (xi,yi)
     """
     zi = griddata(zip(x,y), z, (xi, yi), method='nearest')
     return zi
