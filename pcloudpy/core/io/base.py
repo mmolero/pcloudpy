@@ -106,7 +106,7 @@ class ImageDataBase(DataBase):
     def _update(self):
         pass
 
-    def compute(self):
+    def update(self):
         self._update()
         self.set_imagedata(self._imagedata)
         self.update_props()

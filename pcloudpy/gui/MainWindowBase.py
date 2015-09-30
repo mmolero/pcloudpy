@@ -4,12 +4,15 @@ Template MainWindowBase.py
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
 
+import sys
 import os
 os.environ['QT_API'] = 'pyside'
 
 from PySide.QtCore import *
 from PySide.QtGui import *
 import markdown2
+import yaml
+import pprint
 
 #own components
 import resources_rc
@@ -57,6 +60,8 @@ class MainWindowBase(QMainWindow):
         self.setup_statusbar()
         self.setup_connections()
         self.init_settings()
+
+        self.init_toolboxes()
 
         QTimer.singleShot(0,self.load_initial_file)
 
@@ -270,6 +275,26 @@ class MainWindowBase(QMainWindow):
         settings.clear()
         self.reset = True
         self.close()
+
+    def init_toolboxes(self):
+
+        if hasattr(sys, 'frozen'):
+            #http://stackoverflow.com/questions/14750997/load-txt-file-from-resources-in-python
+            fd = QFile(":/config_toolboxes.yaml")
+            if fd.open(QIODevice.ReadOnly | QFile.Text):
+                text = QTextStream(fd).readAll()
+                fd.close()
+            data = yaml.load(text)
+        else:
+            path = os.path.dirname(os.path.realpath(__file__))
+            with open(os.path.join(path,'resources\conf\config_toolboxes.yaml'), 'r') as f:
+                # use safe_load instead load
+                data = yaml.safe_load(f)
+
+        #pp = pprint.PrettyPrinter()
+        #pp.pprint(data)
+        self.toolboxes_widget.init_tree(data)
+
 
     def ok_to_continue(self):
 

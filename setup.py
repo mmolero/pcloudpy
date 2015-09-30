@@ -6,5 +6,6 @@ setup(name='pcloudpy',
       author='Miguel Molero-Armenta',
       author_email='miguel.molero@gmail.com',
       url='https://github.com/mmolero/pcloudpy',
-      packages=find_packages(),
+      packages=find_packages(exclude=["tests"]),
+      include_package_data = True,
 )

@@ -1,8 +1,5 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
-import yaml
-import pprint
-
 from PySide.QtCore import *
 from PySide.QtGui import *
 
@@ -25,24 +22,13 @@ class ToolBoxesWidget(QWidget):
         self.setLayout(layout)
 
         self.tree.clicked.connect(self.click_item)
-        self.init_tree()
-        self.connect(self.tree.selectionModel(), SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.select_item)
+        #self.init_tree()
+        #self.connect(self.tree.selectionModel(), SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.select_item)
 
     currentItemClicked = Signal()
     currentItemSelected = Signal()
 
-    def init_tree(self):
-        #with open(":/config_toolboxes.yaml") as f:
-
-        #http://stackoverflow.com/questions/14750997/load-txt-file-from-resources-in-python
-        fd = QFile(":/config_toolboxes.yaml")
-        if fd.open(QIODevice.ReadOnly | QFile.Text):
-            text = QTextStream(fd).readAll()
-            fd.close()
-
-        data = yaml.load(text)
-        #pp = pprint.PrettyPrinter()
-        #pp.pprint(data)
+    def init_tree(self, data):
 
         model = QStandardItemModel()
         root = model.invisibleRootItem()
@@ -63,6 +49,9 @@ class ToolBoxesWidget(QWidget):
                 item.appendRow(item_child)
 
         self.tree.setModel(model)
+
+        self.connect(self.tree.selectionModel(), SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.select_item)
+
 
     def get_current_item(self):
         if self._current_item:

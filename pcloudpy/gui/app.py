@@ -8,6 +8,8 @@ rcParams['backend.qt4']='PySide'
 import time
 import resources_rc
 
+sys.setrecursionlimit(140000)
+
 def run():
     app = QApplication(sys.argv)
     app.setOrganizationName("pcloudpy")

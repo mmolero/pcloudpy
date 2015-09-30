@@ -85,6 +85,7 @@ class MyPythonCodeEdit(widgets.PyCodeEditBase):
 
         # starts the default pyqode.python server (which enable the jedi code
         # completion worker).
+        #Now it does not work,  why?????
         if hasattr(sys, 'frozen'):
             self.backend.start(server.__file__, interpreter="python")
         else:
