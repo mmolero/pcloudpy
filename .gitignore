@@ -4,4 +4,5 @@
 out
 gen
 /build
+/dist
 .egg-info

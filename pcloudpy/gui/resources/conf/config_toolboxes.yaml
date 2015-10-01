@@ -53,8 +53,20 @@ Filters:
         enabled: 1
         name: Statistical-Outlier-Removal-Filter
         parms:
-            mean_k: QSpinBox
-            std_dev: QDoubleSpinBox
+            mean_k:
+                type: "SpinBox"
+                values: "1, 200, 5, 1"
+                tooltip: |
+                    Set the number of nearest neighbors to use for mean distance estimation.
+
+            std_dev_mult:
+                type: "DoubleSpinBox"
+                values: "0, 20, 1, 1"
+                tooltip: |
+                    Set the standard deviation multiplier for the distance threshold calculation.
+                    The distance threshold will be equal to: mean + std_dev_mult * std.
+                    Points will be classified as inlier or outlier if their average neighbor distance is below or above this threshold respectively.
+
             
         text : |
                 
@@ -63,9 +75,18 @@ Filters:
                 
                 - During the first iteration it will update the average distance that each point has to its nearest k neighbors. The value of k can be set using mean-k. 
                   Next, the mean and standard deviation of all these distances are computed in order to determine a distance threshold. 
-                  The distance threshold will be equal to: mean + std-dev-mult * stddev. The multiplier for the standard deviation can be set using std-dev-mult.
+                  The distance threshold will be equal to: mean + std_dev_mult * std. The multiplier for the standard deviation can be set using std_dev_mult.
                 
                 - During the next iteration the points will be classified as inlier or outlier if their average neighbor distance is below or above this threshold respectively
+
+                **mean_k**:
+                    Set the number of nearest neighbors to use for mean distance estimation.
+
+                **std_dev_mult**:
+                    Set the standard deviation multiplier for the distance threshold calculation.
+                    The distance threshold will be equal to: mean + std_dev_mult * std.
+                    Points will be classified as inlier or outlier if their average neighbor distance is below or above this threshold respectively.
+
                 
                 For more information.
 
@@ -83,8 +104,8 @@ Filters:
         enabled: 1
         name: Extract-Extent-Filter
         parms:
-            extent: Extent
-            
+            extent:
+                type: "Extent"
         text : |
             **Extract Extent Filter** uses a given extent to retrieve the points inside it.
         
@@ -97,11 +118,50 @@ Filters:
         name: Delaunay2D 
         enabled: 1
         parms:
-            alpha: QDoubleSpinBox
-            tolerance: QDoubleSpinBox
+            alpha:
+                type: "DoubleSpinBox"
+                values: "0, 10000, 1, 1"
+                tooltip: |
+                    Specify alpha (or distance) value to control output of this filter.
+                    For a non-zero alpha value, only edges or triangles contained within a sphere centered at mesh vertices will be output.
+                    Otherwise, only triangles will be output.
+            tolerance:
+                type: "DoubleSpinBox"
+                values: "0.01, 10, 0.01, 0.01"
+                tooltip: |
+                    Specify a tolerance to control discarding of closely spaced points.
+                    This tolerance is specified as a fraction of the diagonal length of the bounding box of the points.
             
         text : |
             **Delaunay2D** is a filter that constructs a 2D Delaunay triangulation from a list of input points.
+            see vtkDelaunay2D Documentation.
+
+            The output of the filter is a polygonal dataset. Usually the output is a triangle mesh,
+            but if a non-zero alpha distance value is specified (called the "alpha" value), then only triangles, edges, and vertices laying within the alpha radius are output.
+            In other words, non-zero alpha values may result in arbitrary combinations of triangles, lines, and vertices.
+            (The notion of alpha value is derived from Edelsbrunner's work on "alpha shapes".)
+
+            **alpha**:
+                Specify alpha (or distance) value to control output of this filter.
+                For a non-zero alpha value, only edges or triangles contained within a sphere centered at mesh vertices will be output.
+                Otherwise, only triangles will be output.
+
+            **tolerance**:
+                Specify a tolerance to control discarding of closely spaced points. This tolerance is specified as a fraction of the diagonal length of the bounding box of the points
+
+            The 2D Delaunay triangulation is defined as the triangulation that satisfies the Delaunay criterion for n-dimensional simplexes
+            (in this case n=2 and the simplexes are triangles).
+            This criterion states that a circumsphere of each simplex in a triangulation contains only the n+1 defining points of the simplex.
+            (See "The Visualization Toolkit" text for more information.)
+            In two dimensions, this translates into an optimal triangulation.
+            That is, the maximum interior angle of any triangle is less than or equal to that of any possible triangulation.
+
+            The Delaunay triangulation can be numerically sensitive in some cases.
+            To prevent problems, try to avoid injecting points that will result in triangles with bad aspect ratios (1000:1 or greater).
+            In practice this means inserting points that are "widely dispersed", and enables smooth transition of triangle sizes throughout the mesh.
+            (You may even want to add extra points to create a better point distribution.)
+            If numerical problems are present, you will see a warning message to this effect at the end of the triangulation process.
+
             
         func: Delaunay2D 
             
@@ -111,11 +171,47 @@ Filters:
         enabled: 1
         
         parms :
-            alpha: QDoubleSpinBox
-            tolerance: QDoubleSpinBox
+            alpha:
+                type: "DoubleSpinBox"
+                values: "0, 10000, 1, 1"
+                tooltip: |
+                    Specify alpha (or distance) value to control output of this filter.
+                    For a non-zero alpha value, only verts, edges, faces, or tetra contained within the circumsphere (of radius alpha) will be output.
+                    Otherwise, only tetrahedra will be output.
+            tolerance:
+                type: "DoubleSpinBox"
+                values: "0.01, 10, 0.01, 0.01"
+                tooltip: |
+                    Specify a tolerance to control discarding of closely spaced points.
+                    This tolerance is specified as a fraction of the diagonal length of the bounding box of the points
+
             
         text : |            
             **Delaunay3D** is a filter that constructs a 3D Delaunay triangulation from a list of input points.
+
+            The output of the filter is an unstructured grid dataset.
+            Usually the output is a tetrahedral mesh, but if a non-zero alpha distance value is specified (called the "alpha" value),
+            then only tetrahedra, triangles, edges, and vertices laying within the alpha radius are output.
+            In other words, non-zero alpha values may result in arbitrary combinations of tetrahedra, triangles, lines, and vertices.
+            (The notion of alpha value is derived from Edelsbrunner's work on "alpha shapes".)
+            Note that a modification to alpha shapes enables output of combinations of tetrahedra, triangles, lines, and/or verts
+            (see the boolean ivars AlphaTets, AlphaTris, AlphaLines, AlphaVerts).
+
+            **alpha**:
+                Specify alpha (or distance) value to control output of this filter.
+                For a non-zero alpha value, only verts, edges, faces, or tetra contained within the circumsphere (of radius alpha) will be output.
+                Otherwise, only tetrahedra will be output.
+
+            **tolerance**:
+                Specify a tolerance to control discarding of closely spaced points. This tolerance is specified as a fraction of the diagonal length of the bounding box of the points
+
+            The 3D Delaunay triangulation is defined as the triangulation that satisfies the Delaunay criterion for n-dimensional simplexes
+            (in this case n=3 and the simplexes are tetrahedra).
+            This criterion states that a circumsphere of each simplex in a triangulation contains only the n+1 defining points of the simplex.
+            (See "The Visualization Toolkit" for more information.)
+            While in two dimensions this translates into an "optimal" triangulation, this is not true in 3D, since a measurement for optimality in 3D is not agreed on.
+
+
 
         func: Delaunay3D
 
@@ -124,7 +220,9 @@ Filters:
         name: PointSetNormalsEstimation
         enabled: 1
         parms:
-            number_neighbors : QSpinBox
+            number_neighbors:
+                type: "SpinBox"
+                values: "1,100,1,1"
 
         text: |
             **vtkPointSetNormalEstimation** filter estimates normals of a point set using a local best fit plane.

@@ -22,8 +22,6 @@ class ToolBoxesWidget(QWidget):
         self.setLayout(layout)
 
         self.tree.clicked.connect(self.click_item)
-        #self.init_tree()
-        #self.connect(self.tree.selectionModel(), SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.select_item)
 
     currentItemClicked = Signal()
     currentItemSelected = Signal()
@@ -58,18 +56,16 @@ class ToolBoxesWidget(QWidget):
             return self._current_item
 
     def click_item(self, index):
-
         self._current_item = index.model().itemFromIndex(index)
         if isinstance(self._current_item, ToolboxStandardItem):
             if self._current_item.isEnabled():
                 self.currentItemClicked.emit()
 
-    def select_item(self, new_item, old_item):
+    def select_item(self, new_item, _):
         items = new_item.indexes()
         if len(items)!=0:
             index = new_item.indexes()[0]
             #self.click_item(index)
-
             self._current_item = index.model().itemFromIndex(index)
             if isinstance(self._current_item, ToolboxStandardItem):
                 if self._current_item.isEnabled():
