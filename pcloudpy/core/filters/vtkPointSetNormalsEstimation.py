@@ -1,7 +1,7 @@
 """
-Class that define a normal estimation method
+Class that define a normal estimation method based on vtkPointSetNormalsEstimation by David Doria
 """
-
+__all__ = ["vtkPointSetNormalsEstimation"]
 from base import FilterBase
 
 import numpy as np
@@ -15,8 +15,6 @@ class vtkPointSetNormalsEstimation(FilterBase):
     """
      vtkPointSetNormalEstimation filter estimates normals of a point set using a local best fit plane.
 
-
-
      At every point in the point set, vtkPointSetNormalEstimation computes the best
      fit plane of the set of points within a specified radius of the point (or a fixed number of neighbors).
      The normal of this plane is used as an estimate of the normal of the surface that would go through
@@ -24,8 +22,6 @@ class vtkPointSetNormalsEstimation(FilterBase):
 
      vtkPointSetNormalEstimation Class is a python implementation based on the version included in PointSetProcessing by
      David Doria, see https://github.com/daviddoria/PointSetProcessing
-
-
     """
 
     def __init__(self, number_neighbors = 10, mode = 0,  radius = 1):

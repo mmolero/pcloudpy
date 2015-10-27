@@ -2,6 +2,8 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 # License: BSD 3 clause
 
+from vtk import vtkPolyData
+
 from ..base import BaseObject
 
 class FilterBase(BaseObject):
@@ -10,24 +12,42 @@ class FilterBase(BaseObject):
 
     Attributes
     ----------
-
     input_: vtkPolyData
         Input Data  to be filtered
 
     output_: vtkPolyData
         Output Data
 
-
     """
+
     def __init__(self):
 
         self.input_ = None
         self.output_ = None
 
-    def set_input(self, input_):
-        self.input_ = input_
+    def set_input(self, input_data):
+
+        """
+        set input data
+
+        Parameters
+        ----------
+        input-data : vtkPolyData
+
+        Returns
+        -------
+        is_valid: bool
+            Returns True if the input_data is valid for processing
+
+        """
+        if isinstance(input_data, vtkPolyData):
+            return True
+        else:
+            return False
+
 
     def get_output(self):
+
         if self.output_:
             return self.output_
 

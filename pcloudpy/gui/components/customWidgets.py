@@ -15,6 +15,10 @@ class SpinBox(QtGui.QSpinBox):
         self.setSingleStep(int(step))
         self.setValue(int(value))
 
+    def get_values(self):
+        return self.value()
+
+
 class DoubleSpinBox(QtGui.QDoubleSpinBox):
     def __init__(self, parent=None):
         super(DoubleSpinBox, self).__init__(parent)
@@ -24,6 +28,19 @@ class DoubleSpinBox(QtGui.QDoubleSpinBox):
         self.setSingleStep(step)
         self.setValue(value)
 
+    def get_values(self):
+        return self.value()
+
+
+class CheckBox(QtGui.QCheckBox):
+    def __init__(self, parent=None):
+        super(CheckBox, self).__init__(parent)
+
+    def set_values(self, value):
+        self.setChecked(value)
+
+    def get_values(self):
+        return self.isChecked()
 
 class Extent(QtGui.QWidget):
 

@@ -7,6 +7,9 @@ from ManagerLayer import Layer
 class AppObject(object):
     """
     Application Object
+
+
+
     """
     def __init__(self):
 
@@ -24,6 +27,10 @@ class AppObject(object):
 
     def currentView(self):
         """
+        Gets the Current View
+
+
+
 
         """
         return self._current_view

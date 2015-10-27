@@ -192,9 +192,6 @@ class MainWindow(MainWindowBase):
         name += "_%s"%self.func
         layer_clone.set_name(name)
 
-        self.setCursor(Qt.WaitCursor)
-        QApplication.processEvents()
-
         #apply filter
         func = getattr(Filters, self.func)
         filter = func(**self.parms)
@@ -203,20 +200,27 @@ class MainWindow(MainWindowBase):
 
         if filter.set_input(data):
             try:
+                self.setCursor(Qt.WaitCursor)
+                QApplication.processEvents()
                 filter.update()
             except Exception as e:
                 q = QMessageBox(QMessageBox.Critical, "Error Message", e.message)
                 q.setStandardButtons(QMessageBox.Ok)
                 q.exec_()
+                self.setCursor(Qt.ArrowCursor)
+                QApplication.processEvents()
                 return
-        else:
-            self.setCursor(Qt.ArrowCursor)
-            QApplication.processEvents()
+            finally:
+                self.setCursor(Qt.ArrowCursor)
+                QApplication.processEvents()
 
+        else:
             msg = "No suitable Filter for the chosen dataset"
             q = QMessageBox(QMessageBox.Critical, "Error Message", msg)
             q.setStandardButtons(QMessageBox.Ok)
             q.exec_()
+            self.setCursor(Qt.ArrowCursor)
+            QApplication.processEvents()
             return
         ###
 
@@ -226,8 +230,6 @@ class MainWindow(MainWindowBase):
         current_view.update_render()
         self.datasets_widget.add_dataset(layer_clone, current_view)
 
-        self.setCursor(Qt.ArrowCursor)
-        QApplication.processEvents()
 
     def add_layer_from_app(self):
 
@@ -240,8 +242,8 @@ class MainWindow(MainWindowBase):
     def _get_datasets(self, func, filename):
         self.setCursor(Qt.WaitCursor)
         QApplication.processEvents()
-        name = os.path.basename(filename)
 
+        name = os.path.basename(filename)
         pcls = func(filename)
         pcls.update()
 
@@ -254,7 +256,6 @@ class MainWindow(MainWindowBase):
         current_view.update_render()
 
         self.App.setCurrentView(current_view)
-
         self.datasets_widget.add_dataset(layer, current_view)
         props = layer.get_container().get_props()
         self.object_inspector_widget.update(props)

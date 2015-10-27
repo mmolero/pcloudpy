@@ -2,5 +2,15 @@ from StatisticalOutlierRemovalFilter import StatisticalOutlierRemovalFilter
 from Delaunay2D import Delaunay2D
 from Delaunay3D import Delaunay3D
 from ExtractPolyData import ExtractPolyData
+
+from NormalsEstimation import NormalsEstimation
+from OrientedNormalEstimation import OrientedNormalsEstimation
+
 from vtkPointSetNormalsEstimation import vtkPointSetNormalsEstimation
+from vtkPointSetOutlierRemoval import vtkPointSetOutlierEstimation
+
+
 from DisplayNormals import DisplayNormals
+from ScreenedPoisson import ScreenedPoisson
+
+

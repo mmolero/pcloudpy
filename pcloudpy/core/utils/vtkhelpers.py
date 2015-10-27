@@ -3,90 +3,10 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
 import numpy as np
-from vtk.util.numpy_support import vtk_to_numpy, numpy_to_vtk
-from vtk.util.numpy_support import get_numpy_array_type, create_vtk_array, get_vtk_array_type, numpy_to_vtkIdTypeArray
-from vtk.util.numpy_support import get_vtk_to_numpy_typemap
-from vtk import vtkPoints, vtkCellArray, vtkIdTypeArray, vtkUnsignedCharArray, vtkPolyData, vtkPolyDataMapper, vtkActor
+from vtk.util.numpy_support import numpy_to_vtk
+from vtk import vtkPolyDataMapper, vtkActor
 from vtk import vtkRenderer, vtkRenderWindow, vtkRenderWindowInteractor
-from vtk import VTK_POINTS, VTK_FLOAT, VTK_CHAR, VTK_UNSIGNED_CHAR
-from vtk import  vtkPlaneSource, vtkLookupTable, vtkTexture, vtkImageMapToColors, vtkImageActor, vtkImageData, vtkDataSetMapper
-
-
-def numpy_from_polydata(polydata):
-    """
-    Converts vtkPolyData to Numpy Array
-
-    Parameters
-    ----------
-
-    polydata: vtkPolyData
-        Input Polydata
-
-    """
-
-    nodes_vtk_array = polydata.GetPoints().GetData()
-    nodes_numpy_array = vtk_to_numpy(nodes_vtk_array)
-
-    if polydata.GetPointData().GetScalars():
-        nodes_numpy_array_colors = vtk_to_numpy(polydata.GetPointData().GetScalars("colors"))
-        return np.c_[nodes_numpy_array, nodes_numpy_array_colors]
-    else:
-        return nodes_numpy_array
-
-
-
-def polydata_from_numpy(coords):
-    """
-    Converts Numpy Array to vtkPolyData
-
-    Parameters
-    ----------
-    coords: array, shape= [number of points, point features]
-        array containing the point cloud in which each point has three coordinares [x, y, z]
-        and none, one or three values corresponding to colors.
-
-    Returns:
-    --------
-    PolyData: vtkPolyData
-        concrete dataset represents vertices, lines, polygons, and triangle strips
-
-    """
-
-    Npts, Ndim = np.shape(coords)
-
-    Points = vtkPoints()
-    ntype = get_numpy_array_type(Points.GetDataType())
-    coords_vtk = numpy_to_vtk(np.asarray(coords[:,0:3], order='C',dtype=ntype), deep=1)
-    Points.SetNumberOfPoints(Npts)
-    Points.SetData(coords_vtk)
-
-    Cells = vtkCellArray()
-    ids = np.arange(0,Npts, dtype=np.int64).reshape(-1,1)
-    IDS = np.concatenate([np.ones(Npts, dtype=np.int64).reshape(-1,1), ids],axis=1)
-    ids_vtk = numpy_to_vtkIdTypeArray(IDS, deep=True)
-
-    Cells.SetNumberOfCells(Npts)
-    Cells.SetCells(Npts,ids_vtk)
-
-    if Ndim == 4:
-        color = [128]*len(coords)
-        color = np.c_[color, color, color]
-    elif Ndim == 6:
-        color = coords[:,3:]
-    else:
-        color = [[128, 128, 128]]*len(coords)
-
-    color_vtk = numpy_to_vtk(
-            np.ascontiguousarray(color, dtype=get_vtk_to_numpy_typemap()[VTK_UNSIGNED_CHAR]),
-            deep=True)
-
-    color_vtk.SetName("colors")
-
-    PolyData = vtkPolyData()
-    PolyData.SetPoints(Points)
-    PolyData.SetVerts(Cells)
-    PolyData.GetPointData().SetScalars(color_vtk)
-    return PolyData
+from vtk import vtkImageActor, vtkImageData, vtkDataSetMapper
 
 
 def actor_from_unstructuredgrid(data):

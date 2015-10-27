@@ -215,14 +215,14 @@ Filters:
 
         func: Delaunay3D
 
-    Point Set Normals Estimation:
+    Point Set Normals Estimation (vtkPointSetNormalsEstimation):
         type: filter
-        name: PointSetNormalsEstimation
+        name: vtkPointSetNormalsEstimation
         enabled: 1
         parms:
             number_neighbors:
                 type: "SpinBox"
-                values: "1,100,1,1"
+                values: "1, 100, 1, 1"
 
         text: |
             **vtkPointSetNormalEstimation** filter estimates normals of a point set using a local best fit plane.
@@ -238,6 +238,66 @@ Filters:
 
         func: vtkPointSetNormalsEstimation
 
+    Normals Estimation:
+
+        type: filter
+        name: NormalsEstimation
+        enabled: 1
+        parms:
+            number_neighbors:
+                type: "SpinBox"
+                values: "1,100,1,1"
+
+        text: |
+            **Normals Estimation** filter estimates normals of a point cloud using PCA Eigen method to fit plane
+
+        func: NormalsEstimation
+
+    Oriented Normals Estimation:
+
+        type: filter
+        name: OrientedNormalsEstimation
+        enabled: 1
+        parms:
+            number_neighbors:
+                type: "SpinBox"
+                values: "1,100,1,1"
+
+        text: |
+            ** Oriented Normals Estimation** filter estimates normals of a point cloud using PCA Eigen method to fit plane and minimum spanning tree
+
+        func: OrientedNormalsEstimation
+
+
+    Point Set Outlier Estimation:
+        type: filter
+        name: vtkPointSetOutlierEstimation
+        enabled: 1
+        parms:
+            percent_to_remove:
+                type: "DoubleSpinBox"
+                values: "0,1,0.1,0.1"
+                tooltip: |
+                    We sort these distances and keep points whose nearest point is in a certain percentile
+                    of the entire point set.
+
+
+        text: |
+            Outlier Removal - vtkPointSetOutlierRemoval,
+            Python implementation based on Point Set Processing for VTK by David Doria
+            see:
+                https://github.com/daviddoria/PointSetProcessing
+                http://www.vtkjournal.org/browse/publication/708
+
+            We take the simple definition of an outlier to be a point that is farther away from its nearest neighbor than
+            expected. To implement this definition, for every point p in the point set, we compute the distance from p to
+            the nearest point to p. We sort these distances and keep points whose nearest point is in a certain percentile
+            of the entire point set.
+            This parameter is specified by the user as **percent_to_remove**
+
+        func: vtkPointSetOutlierEstimation
+
+
 
     Normals Visualization:
         type: display
@@ -245,3 +305,95 @@ Filters:
         enabled: 1
         text: Normal Vector Visualization. First, Normal estimation must be done
         func: DisplayNormals
+
+
+Surface Reconstruction:
+
+    Screened Poisson Reconstruction:
+        type: filter
+        name: ScreenedPoisson
+        enabled: 1
+        func: ScreenedPoisson
+        parms:
+            depth:
+                type: "SpinBox"
+                values: "2,16,1,8"
+                tooltip: ""
+
+            full_depth:
+                type: "SpinBox"
+                values: "2,16,1,5"
+                tooltip: ""
+
+            scale:
+                type: "DoubleSpinBox"
+                values: "0.1, 2.0, 0.1, 1.1"
+                tooltip: ""
+
+            samples_per_node:
+                type: "SpinBox"
+                values: "1,20,1,1"
+                tooltip: ""
+
+            cg_depth:
+                type: "SpinBox"
+                values: "0, 16, 1, 0"
+                tooltip: ""
+
+            enable_polygon_mesh:
+                type: "CheckBox"
+                values: "0"
+                tooltip: ""
+
+            enable_density:
+                type: "CheckBox"
+                values: "0"
+                tooltip: ""
+
+        text: |
+            **Screened Poisson Surface Reconstruction** (Version 6.13)
+
+            Requires Point Cloud with oriented normals
+
+            more information, see:
+
+                http://www.cs.jhu.edu/~misha/Code/PoissonRecon/Version6.13/
+                https://github.com/mmolero/pypoisson
+
+            **depth**:
+                This integer is the maximum depth of the tree that will be used for surface reconstruction.
+                Running at depth d corresponds to solving on a voxel grid whose resolution is no larger than 2^d x 2^d x 2^d.
+                Note that since the reconstructor adapts the octree to the sampling density, the specified reconstruction depth is only an upper bound.
+                The default value for this parameter is 8.
+
+            **full_depth**:
+                This integer specifies the depth beyond depth the octree will be adapted.
+                At coarser depths, the octree will be complete, containing all 2^d x 2^d x 2^d nodes.
+                The default value for this parameter is 5.
+
+            **scale**:
+                This floating point value specifies the ratio between the diameter of the cube used for reconstruction and the diameter of the samples' bounding cube.
+                The default value is 1.1.
+
+            **samples per node**:
+                This floating point value specifies the minimum number of sample points that should fall within an octree node as the octree construction is adapted to sampling density.
+                For noise-free samples, small values in the range [1.0 - 5.0] can be used.
+                For more noisy samples, larger values in the range [15.0 - 20.0] may be needed to provide a smoother, noise-reduced, reconstruction.
+                The default value is 1.0.
+
+            **cg depth**:
+                This integer is the depth up to which a conjugate-gradients solver will be used to solve the linear system.
+                Beyond this depth Gauss-Seidel relaxation will be used.
+                The default value for this parameter is 0.
+
+            **enable polygon mesh**:
+                Enabling this flag tells the reconstructor to output a polygon mesh (rather than triangulating the results of Marching Cubes).
+                The default value for this parameter is False.
+
+            **enable density**:
+                Enabling this flag tells the reconstructor to output the estimated depth values of the iso-surface vertices
+                The default value for this parameter is False.
+
+
+
+

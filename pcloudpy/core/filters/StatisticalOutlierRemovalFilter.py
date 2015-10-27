@@ -10,7 +10,8 @@ import numpy as np
 from vtk import vtkPoints, vtkCellArray, vtkPolyData
 from sklearn.neighbors import KDTree
 
-from ..utils.vtkhelpers import numpy_from_polydata,  polydata_from_numpy
+from ..utils.vtkhelpers import actor_from_imagedata, actor_from_polydata
+from ..io.converters import numpy_from_polydata, polydata_from_numpy
 from base import FilterBase
 
 class StatisticalOutlierRemovalFilter(FilterBase):

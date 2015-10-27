@@ -9,9 +9,8 @@ import numpy as np
 
 from vtk import vtkPolyData, vtkImageData
 
-from ..utils.vtkhelpers import polydata_from_numpy, \
-    actor_from_imagedata, actor_from_polydata, numpy_from_polydata
-
+from ..utils.vtkhelpers import actor_from_imagedata, actor_from_polydata
+from ..io.converters import numpy_from_polydata, polydata_from_numpy
 
 __all__ = ["DataBase", "ImageDataBase", "PolyDataBase", "PointsCloudBase"]
 

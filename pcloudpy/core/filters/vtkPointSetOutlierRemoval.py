@@ -1,18 +1,15 @@
 
+__all__ = ["vtkPointSetOutlierEstimation"]
 
 import numpy as np
 from vtk import vtkPoints, vtkCellArray, vtkPolyData, vtkIdList
 from vtk import vtkKdTreePointLocator
 from vtk import vtkSphereSource, vtkXMLPolyDataWriter, vtkVertexGlyphFilter
-from math import sqrt
-
 
 from sklearn.neighbors import KDTree
-from ..utils.vtkhelpers import numpy_from_polydata,  polydata_from_numpy
+from ..utils.vtkhelpers import actor_from_imagedata, actor_from_polydata
+from ..io.converters import numpy_from_polydata, polydata_from_numpy
 from base import FilterBase
-
-def Distance2BetweenPoints(pt1, pt2):
-    return sqrt(pt1[0]-pt1[0])**2 + (pt1[1]-pt2[1])**2 +(pt1[2]-pt2[2])**2
 
 
 class vtkPointSetOutlierEstimation(FilterBase):
@@ -82,82 +79,5 @@ class vtkPointSetOutlierEstimation(FilterBase):
         output = polydata_from_numpy(array)
         self.output_ = output
 
-
-
-
-def generateData():
-
-    sphereSource = vtkSphereSource()
-    sphereSource.SetRadius(1.0)
-    sphereSource.SetPhiResolution(20)
-    sphereSource.SetThetaResolution(20)
-    sphereSource.Update()
-
-    points = vtkPoints()
-    points.DeepCopy(sphereSource.GetOutput().GetPoints())
-
-    polyData = vtkPolyData()
-    polyData.SetPoints(points)
-
-    glyphFilter = vtkVertexGlyphFilter()
-    glyphFilter.SetInputData(polyData)
-    glyphFilter.Update()
-
-    #Write the result to a file
-    polyDataWriter = vtkXMLPolyDataWriter()
-    polyDataWriter.SetInputData(glyphFilter.GetOutput())
-    polyDataWriter.SetFileName("SpherePoints.vtp")
-    polyDataWriter.Write()
-
-
-def generateOutlierData():
-
-    #Create a bunch of clustered points
-    points = vtkPoints()
-    spacing = .01
-    for i in range(10):
-        for j in range(10):
-            for k in range(10):
-                points.InsertNextPoint(i*spacing, j*spacing, k*spacing)
-
-
-
-
-    #Add some outlier points
-    val = .02
-    points.InsertNextPoint(val, val, val)
-    points.InsertNextPoint(-val, val, val)
-    points.InsertNextPoint(val, -val, val)
-
-    #Create cells
-    vertices = vtkCellArray()
-    for i in range(points.GetNumberOfPoints()):
-        vertices.InsertNextCell(1)
-        vertices.InsertCellPoint(i)
-
-    polydata = vtkPolyData()
-    polydata.SetPoints(points)
-    polydata.SetVerts(vertices)
-
-    writer = vtkXMLPolyDataWriter()
-    writer.SetFileName("Input.vtp")
-    writer.SetInput(polydata)
-    writer.Write()
-
-    return polydata
-
-
-if __name__== "__main__":
-
-    polydata = generateOutlierData()
-    outlierRemoval = vtkPointSetOutlierEstimation()
-    outlierRemoval.set_input(polydata)
-    outlierRemoval.set_percent_to_remove(0.01)
-    outlierRemoval.update()
-
-    writer = vtkXMLPolyDataWriter()
-    writer.SetFileName("Output.vtp")
-    writer.SetInput(outlierRemoval.GetOutput())
-    writer.Write()
 
 

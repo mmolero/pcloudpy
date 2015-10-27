@@ -66,7 +66,7 @@ def widget_generator(func, parms, text="", only_apply=False):
             self.apply_button.setObjectName("apply")
             self.apply_button.setFixedSize(60,60)
 
-            grid.addWidget(self.apply_button, 0, index+1, index, 3)
+            grid.addWidget(self.apply_button, 0, 3, index, 3)
 
             html = markdown2.markdown(str(text))
             textEdit = QtGui.QTextEdit(html)
@@ -103,7 +103,7 @@ def widget_generator(func, parms, text="", only_apply=False):
                         d[k] = self.findChild(customWidgets.Extent, k).get_extent()
                     else:
                         item = self.findChild(getattr(customWidgets, v['type']), k)
-                        d[k] = item.value()
+                        d[k] = item.get_values()
                 return self.func, d
 
     return TemplateWidget(None, func, parms, text=text, only_apply=only_apply)
