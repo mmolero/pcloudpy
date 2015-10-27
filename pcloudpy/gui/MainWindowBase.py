@@ -37,7 +37,7 @@ NAME = "pcloudpy"
 
 class Info(object):
     version = "0.10"
-    date = "05-08-2015"
+    date = "27-10-2015"
 
 class MainWindowBase(QMainWindow):
     """
