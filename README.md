@@ -15,9 +15,10 @@ The main features of the pcloudpy module are the following:
 
 - Display dense point clouds
 - Selection and Cleaning of point clouds
-- Filtering of point clouds
+- Filtering of point clouds (point neighborhood statistics, Outlier removal)
+- Extent Extraction from Point Clouds
 - Delaunay Triangulations
-- Normals Estimation 
+- Normals Estimation (PCA Eigen Method & Oriented)
 - Screened Poisson Surface Reconstruction
 - Interaction with pcloudpy modules from an embedded IPython Console
 
