@@ -17,14 +17,37 @@ The main features of the pcloudpy module are the following:
 - Selection and Cleaning of point clouds
 - Filtering of point clouds
 - Delaunay Triangulations
+- Normals Estimation 
+- Screened Poisson Surface Reconstruction
 - Interaction with pcloudpy modules from an embedded IPython Console
-
 
 -------
 
 ![](https://github.com/mmolero/pcloudpy/blob/master/resources/pcloudpy_v0.10.png)
 
 ------
+
+Requirements:
+
+- VTK==5.10.1
+
+- markdown2>=2.3.0
+
+- laspy>=1.2.5
+
+- PyYAML>=3.11
+
+- pyqode.core>=2.6.6
+
+- pyqode.qt>=2.6.0
+
+- pyqode.python>=2.6.3
+ 
+- pypoisson, see https://github.com/mmolero/pypoisson
+
+
+
+-----
 
 if you are interesting in collaborating and/or testing this software, please don't hesitate to contact me
 
