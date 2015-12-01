@@ -32,6 +32,8 @@ Requirements:
 
 - VTK==5.10.1
 
+- GDAL>=1.11.0
+
 - markdown2>=2.3.0
 
 - laspy>=1.2.5
