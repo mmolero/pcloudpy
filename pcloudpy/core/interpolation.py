@@ -14,7 +14,7 @@ def natural_neighbor(x,y,z,xi,yi):
     in that it provides a more smooth approximation to the underlying "true" function.
     see <a href="http://en.wikipedia.org/wiki/Radial_basis_function">Radial_basic_function
 
-    zi = natural_neighbor(x,y,z,xi,yi) fits a surface of the form z = f*(*x, y) to the data in the (usually) nonuniformly spaced vectors (x, y, z).<br/>
+    zi = natural_neighbor(x,y,z,xi,yi) fits a surface of the form z = f*(*x, y) to the data in the (usually) non uniformly spaced vectors (x, y, z).<br/>
     griddata() interpolates this surface at the points specified by (xi, yi) to produce zi. xi and yi must describe a regular grid.
 
 
