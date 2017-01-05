@@ -287,7 +287,7 @@ class MainWindowBase(QMainWindow):
             data = yaml.load(text)
         else:
             path = os.path.dirname(os.path.realpath(__file__))
-            with open(os.path.join(path,'resources\conf\config_toolboxes.yaml'), 'r') as f:
+            with open(os.path.join(path,'resources', 'conf', 'config_toolboxes.yaml'), 'r') as f:
                 # use safe_load instead load
                 data = yaml.safe_load(f)
 
