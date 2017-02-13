@@ -1,16 +1,21 @@
+import os
+os.environ["QT_API"]= "pyside"
 from PySide import QtGui, QtCore
+
 
 def new_load_qt(api_options):
     from PySide import QtCore, QtGui, QtSvg
     return QtCore, QtGui, QtSvg, 'pyside'
 
-from IPython.external import  qt_loaders
+from qtconsole import  qt_loaders
 qt_loaders.load_qt = new_load_qt
 
 
-from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
-from IPython.qt.inprocess import QtInProcessKernelManager
+#from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
+#from IPython.qt.inprocess import QtInProcessKernelManager
 from IPython.lib import guisupport
+from qtconsole.rich_ipython_widget import RichIPythonWidget
+from qtconsole.inprocess import QtInProcessKernelManager
 
 
 class EmbedIPython(RichIPythonWidget):
