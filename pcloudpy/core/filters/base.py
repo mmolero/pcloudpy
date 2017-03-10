@@ -41,6 +41,7 @@ class FilterBase(BaseObject):
 
         """
         if isinstance(input_data, vtkPolyData):
+            self.input_ = input_data
             return True
         else:
             return False
