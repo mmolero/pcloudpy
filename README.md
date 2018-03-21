@@ -1,4 +1,4 @@
-## pcloudpy <img src="https://github.com/mmolero/pcloudpy/blob/master/resources/pcloudpy.png" width="60", height="60">
+## pcloudpy 
 
 Point Cloud Viewer and Processing Toolkit in Python
 
