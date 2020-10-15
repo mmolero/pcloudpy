@@ -6,48 +6,45 @@ Template MainWindowBase.py
 
 import sys
 import os
-os.environ['QT_API'] = 'pyside'
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal as Signal
 
-from PySide.QtCore import *
-from PySide.QtGui import *
 import markdown2
 import yaml
 import pprint
 
 #own components
-import resources_rc
-from graphics.QVTKWidget import QVTKWidget
+from pcloudpy.gui.resources_rc import *
+#from pcloudpy.gui.graphics.QVTKWidget import QVTKWidget
 
-from AppObject import AppObject
+from pcloudpy.gui.AppObject import AppObject
 from pcloudpy.gui.utils.qhelpers import *
 
-from components.ViewWidget import ViewWidget
-from components.TabViewWidget import TabViewWidget
-from components.ToolboxesWidget import ToolBoxesWidget
-from components.DatasetsWidget import DatasetsWidget
-from components.ObjectInspectorWidget import ObjectInspectorWidget
-from components.FilterWidget import FilterWidget
+from pcloudpy.gui.components.ViewWidget import ViewWidget
+from pcloudpy.gui.components.TabViewWidget import TabViewWidget
+from pcloudpy.gui.components.ToolboxesWidget import ToolBoxesWidget
+from pcloudpy.gui.components.DatasetsWidget import DatasetsWidget
+from pcloudpy.gui.components.ObjectInspectorWidget import ObjectInspectorWidget
+from pcloudpy.gui.components.FilterWidget import FilterWidget
 
 #from shell.PythonConsole import PythonConsole
-from shell.IPythonConsole import IPythonConsole
-from shell.CodeEdit import CodeEdit
+#from shell.IPythonConsole import IPythonConsole
+#from shell.CodeEdit import CodeEdit
 
 NAME = "pcloudpy"
-
 
 class Info(object):
     version = "0.10"
     date = "27-10-2015"
-
 class MainWindowBase(QMainWindow):
     """
     Base Class for the MainWindow Object. This class should inherit its attributes and methods to a MainWindow Class
     """
     def __init__(self, parent = None):
         super(MainWindowBase, self).__init__(parent)
-
         self.setLocale((QLocale(QLocale.English, QLocale.UnitedStates)))
-
         self._software_name = NAME
 
         self.App = AppObject()
@@ -74,9 +71,7 @@ class MainWindowBase(QMainWindow):
         self._software_name = name
 
     def init(self):
-
         self.Info = Info()
-
         self.dirty = False
         self.reset = False
         self.filename = None
@@ -97,16 +92,15 @@ class MainWindowBase(QMainWindow):
 
     def load_initial_file(self):
         settings = QSettings()
-        fname = unicode(settings.value("LastFile"))
+        fname = settings.value("LastFile")
         if fname and QFile.exists(fname):
             self.load_file(fname)
 
     def load_file(self, fname=None):
-
         if fname is None:
             action = self.sender()
             if isinstance(action, QAction):
-                fname = unicode(action.data())
+                fname = action.data()
                 if not self.ok_to_Continue():
                     return
             else:
@@ -118,7 +112,6 @@ class MainWindowBase(QMainWindow):
             self.filename = fname
             self.dirty = False
             self.set_title(fname)
-
             #Add More actions
             #
             #
@@ -142,19 +135,15 @@ class MainWindowBase(QMainWindow):
         file_open_action = createAction(self, "&Open Dataset[s]", self.file_open)
         file_open_action.setIcon(self.style().standardIcon(QStyle.SP_DirIcon))
         help_about_action = createAction(self, "&About %s"%self._software_name, self.help_about, icon="pcloudpy.png")
-
         addActions(file_menu, (file_open_action,))
         addActions(help_menu, (help_about_action,))
 
     def setup_connections(self):
-
         #Main Window
         self.workspaceLineEdit.textEdited.connect(self.editWorkSpace)
-
-        self.code_edit.codeRequested.connect(self.console_widget.execute_code)
+        #self.code_edit.codeRequested.connect(self.console_widget.execute_code)
 
     def setup_docks(self):
-
         #Toolboxes
         self.toolboxes_widget = ToolBoxesWidget()
         self.toolboxes_dockwidget = QDockWidget(self.tr("Toolboxes"))
@@ -189,17 +178,17 @@ class MainWindowBase(QMainWindow):
 
         #Console
         self.tab_console = QTabWidget()
-        self.console_widget = IPythonConsole(self, self.App)
-        self.code_edit = CodeEdit()
+        #self.console_widget = IPythonConsole(self, self.App)
+        #self.code_edit = CodeEdit()
 
-        self.tab_console.addTab(self.console_widget, "Console")
-        self.tab_console.addTab(self.code_edit, "Editor")
+        #self.tab_console.addTab(self.console_widget, "Console")
+        #self.tab_console.addTab(self.code_edit, "Editor")
 
-        self.console_widget_dockwidget = QDockWidget(self.tr("IPython"))
-        self.console_widget_dockwidget.setObjectName("Console-Dock")
-        self.console_widget_dockwidget.setWidget(self.tab_console)
-        self.console_widget_dockwidget.setAllowedAreas(Qt.BottomDockWidgetArea)
-        self.addDockWidget(Qt.BottomDockWidgetArea, self.console_widget_dockwidget)
+        #self.console_widget_dockwidget = QDockWidget(self.tr("IPython"))
+        #self.console_widget_dockwidget.setObjectName("Console-Dock")
+        #self.console_widget_dockwidget.setWidget(self.tab_console)
+        #self.console_widget_dockwidget.setAllowedAreas(Qt.BottomDockWidgetArea)
+        #self.addDockWidget(Qt.BottomDockWidgetArea, self.console_widget_dockwidget)
 
 
     def create_toolbars(self):
@@ -349,8 +338,6 @@ class MainWindowBase(QMainWindow):
 
         else:
             event.ignore()
-
-
 
 
 if __name__=='__main__':

@@ -3,7 +3,9 @@ Basic Window handling custom operations from QVTKRenderWindowInteractor
 """
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
-from PySide import QtCore, QtGui
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 import numpy as np
 from vtk import vtkWindowToImageFilter, vtkPNGWriter
@@ -13,9 +15,7 @@ from vtk import vtkCellPicker, vtkAreaPicker, vtkCleanPolyData, vtkDataSetSurfac
 from vtk import vtkExtractPolyDataGeometry, vtkExtractGeometry, vtkImplicitSelectionLoop, vtkImplicitBoolean
 from vtk import vtkOrientedGlyphContourRepresentation,  vtkContourWidget, vtkOrientationMarkerWidget, vtkAxesActor
 
-
-from QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
-
+from .QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 class QVTKWidget(QVTKRenderWindowInteractor):
 
@@ -23,6 +23,7 @@ class QVTKWidget(QVTKRenderWindowInteractor):
         super(QVTKWidget, self).__init__(parent)
         self._enable_axis = False
         self._Iren.SetInteractorStyle (vtkInteractorStyleTrackballCamera ())
+
 
         self.renderer = vtkRenderer()
         self.renderer.GradientBackgroundOn()
@@ -139,6 +140,7 @@ class QVTKWidget(QVTKRenderWindowInteractor):
 
     def get_interactor(self):
         return self._Iren
+
 
 
 if __name__ == "__main__":

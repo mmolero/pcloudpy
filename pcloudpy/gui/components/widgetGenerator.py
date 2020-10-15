@@ -1,13 +1,17 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 import markdown2
-from PySide import QtGui
 
-import customWidgets
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal as Signal
+
+from pcloudpy.gui.components import customWidgets
 
 
 def widget_generator(func, parms, text="", only_apply=False):
 
-    class TemplateWidget(QtGui.QWidget):
+    class TemplateWidget(QWidget):
         def __init__(self, parent=None, func=None, parms=None, text="", only_apply=False):
             super(TemplateWidget, self).__init__(parent)
             self.parms = None
@@ -23,15 +27,15 @@ def widget_generator(func, parms, text="", only_apply=False):
                     self.init_text(text)
 
         def init_apply(self, text):
-            grid = QtGui.QGridLayout()
+            grid = QGridLayout()
 
-            self.apply_button = QtGui.QPushButton("Apply")
+            self.apply_button = QPushButton("Apply")
             self.apply_button.setObjectName("apply")
             self.apply_button.setFixedSize(60,60)
             grid.addWidget(self.apply_button, 0, 0)
 
             html = markdown2.markdown(str(text))
-            textEdit = QtGui.QTextEdit(html)
+            textEdit = QTextEdit(html)
             textEdit.setMinimumWidth(350)
             textEdit.setMinimumHeight(350)
             textEdit.setReadOnly(True)
@@ -43,9 +47,9 @@ def widget_generator(func, parms, text="", only_apply=False):
         def init_params(self, parms, text):
             self.parms = dict(parms)
 
-            grid = QtGui.QGridLayout()
+            grid = QGridLayout()
             index = 0
-            for (k,v) in parms.iteritems():
+            for (k,v) in parms.items():
 
                 if v['type'] == "Extent":
                     item = customWidgets.Extent()
@@ -57,19 +61,19 @@ def widget_generator(func, parms, text="", only_apply=False):
                     item.set_values(*map(float,v['values'].strip().split(',')))
                     item.setToolTip(v.get('tooltip', ""))
 
-                    grid.addWidget(QtGui.QLabel(k), index, 0, 1, 1)
+                    grid.addWidget(QLabel(k), index, 0, 1, 1)
                     grid.addWidget(item, index, 1, 1, 1)
 
                 index += 1
 
-            self.apply_button = QtGui.QPushButton("Apply")
+            self.apply_button = QPushButton("Apply")
             self.apply_button.setObjectName("apply")
             self.apply_button.setFixedSize(60,60)
 
             grid.addWidget(self.apply_button, 0, 3, index, 3)
 
             html = markdown2.markdown(str(text))
-            textEdit = QtGui.QTextEdit(html)
+            textEdit = QTextEdit(html)
             textEdit.setMinimumWidth(350)
             textEdit.setMinimumHeight(350)
             textEdit.setReadOnly(True)
@@ -81,12 +85,12 @@ def widget_generator(func, parms, text="", only_apply=False):
 
             html = markdown2.markdown(str(text))
 
-            textEdit = QtGui.QTextEdit(html)
+            textEdit = QTextEdit(html)
             textEdit.setMinimumWidth(350)
             textEdit.setMinimumHeight(350)
             textEdit.setReadOnly(True)
 
-            vBox = QtGui.QVBoxLayout()
+            vBox = QVBoxLayout()
             vBox.addWidget(textEdit)
 
             self.setLayout(vBox)

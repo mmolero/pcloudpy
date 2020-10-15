@@ -1,16 +1,25 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
 import numpy as np
+
+
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
+from PyQt5.QtCore import pyqtSignal as Signal
+
+
 from vtk import vtkInteractorStyleImage, vtkInteractorStyleTrackballCamera, vtkActor, vtkImageActor
 from vtk import vtkAreaPicker, vtkContourWidget, vtkOrientedGlyphContourRepresentation, vtkImplicitSelectionLoop
 from vtk import vtkCleanPolyData, vtkImplicitBoolean, vtkDataSetSurfaceFilter, vtkExtractGeometry, vtkExtractPolyDataGeometry
 
 from ..graphics.QVTKWidget import QVTKWidget
+
 from ..utils.qhelpers import *
 from ..ManagerLayer import ManagerLayer
 
 from pcloudpy.core.utils.vtkhelpers import actor_from_polydata
-
 
 
 class QVTKWidgetKeyEvents(QVTKWidget):
@@ -22,7 +31,6 @@ class QVTKWidgetKeyEvents(QVTKWidget):
     def keyPressEvent(self, ev):
         super(QVTKWidgetKeyEvents, self).keyPressEvent(ev)
         self.keyEventRequested.emit(ev.key())
-
 
 
 class ViewWidget(QWidget):
@@ -59,19 +67,61 @@ class ViewWidget(QWidget):
 
     def setup_toolbar(self):
 
-        self.reset_view_action = createAction(self,"Reset View/Camera", self.vtkWidget.reset_view, icon="pqResetCamera32.png")
-        self.set_view_direction_to_mx_action = createAction(self,"View Direction -x", self.vtkWidget.viewMX, icon="pqXMinus24.png")
-        self.set_view_direction_to_my_action = createAction(self,"View Direction -y", self.vtkWidget.viewMY, icon="pqYMinus24.png")
-        self.set_view_direction_to_mz_action = createAction(self,"View Direction -z", self.vtkWidget.viewMZ, icon="pqZMinus24.png")
-        self.set_view_direction_to_px_action = createAction(self,"View Direction +x", self.vtkWidget.viewPX, icon="pqXPlus24.png")
-        self.set_view_direction_to_py_action = createAction(self,"View Direction +y", self.vtkWidget.viewPY, icon="pqYPlus24.png")
-        self.set_view_direction_to_pz_action = createAction(self,"View Direction +z", self.vtkWidget.viewPZ, icon="pqZPlus24.png")
-        self.selection_action = createAction(self,"Select Points", self.select_points, icon="pqSelectSurfPoints24.png")
+        self.reset_view_action = QAction(QIcon(":/pqResetCamera32.png"), "Reset View/Camera", self)
+        self.reset_view_action.setStatusTip("Reset View/Camera")
+        self.reset_view_action.setToolTip("Reset View/Camera")
+        self.reset_view_action.triggered.connect(self.vtkWidget.reset_view)
+
+        self.set_view_direction_to_mx_action = QAction(QIcon(":/pqXMinus24.png"), "View Direction -x", self)
+        self.set_view_direction_to_mx_action.setStatusTip("View Direction -x")
+        self.set_view_direction_to_mx_action.setToolTip("View Direction -x")
+        self.set_view_direction_to_mx_action.triggered.connect(self.vtkWidget.viewMX)
+
+        self.set_view_direction_to_my_action = QAction(QIcon(":/pqYMinus24.png"), "View Direction -y", self)
+        self.set_view_direction_to_my_action.setStatusTip("View Direction -y")
+        self.set_view_direction_to_my_action.setToolTip("View Direction -y")
+        self.set_view_direction_to_my_action.triggered.connect(self.vtkWidget.viewMY)
+
+        self.set_view_direction_to_mz_action = QAction(QIcon(":/pqZMinus24.png"), "View Direction -z", self)
+        self.set_view_direction_to_mz_action.setStatusTip("View Direction -z")
+        self.set_view_direction_to_mz_action.setToolTip("View Direction -z")
+        self.set_view_direction_to_mz_action.triggered.connect(self.vtkWidget.viewMZ)
+
+        self.set_view_direction_to_px_action = QAction(QIcon(":/pqXPlus24.png"), "View Direction +x", self)
+        self.set_view_direction_to_px_action.setStatusTip("View Direction +x")
+        self.set_view_direction_to_px_action.setToolTip("View Direction +x")
+        self.set_view_direction_to_px_action.triggered.connect(self.vtkWidget.viewPX)
+
+        self.set_view_direction_to_py_action = QAction(QIcon(":/pqYPlus24.png"), "View Direction +y", self)
+        self.set_view_direction_to_py_action.setStatusTip("View Direction +y")
+        self.set_view_direction_to_py_action.setToolTip("View Direction +y")
+        self.set_view_direction_to_py_action.triggered.connect(self.vtkWidget.viewPY)
+
+        self.set_view_direction_to_pz_action = QAction(QIcon(":/pqZPlus24.png"), "View Direction +z", self)
+        self.set_view_direction_to_pz_action.setStatusTip("View Direction +z")
+        self.set_view_direction_to_pz_action.setToolTip("View Direction +z")
+        self.set_view_direction_to_pz_action.triggered.connect(self.vtkWidget.viewPZ)
+
+        self.selection_action = QAction(QIcon(":/pqSelectSurfPoints24.png"), "Select Points", self)
+        self.selection_action.setStatusTip("Select Points")
+        self.selection_action.setToolTip("Select Points")
+        self.selection_action.triggered.connect(self.select_points)
+
+        self.extract_action = QAction(QIcon(":/pqExtractSelection.png"), "Extract Selected Points", self)
+        self.extract_action.setStatusTip("Extract Selected Points")
+        self.extract_action.setToolTip("Extract Selected Points")
+        self.extract_action.triggered.connect(self.extract_points)
+
+        self.clean_action = createAction(self, "Clean Selected Points", self.clean_points, icon="clean.png")
+
+        self.clean_action  = QAction(QIcon(":/clean.png"), "Clean Selected Points", self)
+        self.clean_action .setStatusTip("Clean Selected Points")
+        self.clean_action .setToolTip("Clean Selected Points")
+        self.clean_action .triggered.connect(self.clean_points)
+
 
         addActions(self.toolbar, self.reset_view_action)
         addActions(self.toolbar, self.set_view_direction_to_mx_action)
-        self.extract_action = createAction(self,"Extract Selected Points", self.extract_points, icon="pqExtractSelection.png")
-        self.clean_action = createAction(self,"Clean Selected Points", self.clean_points, icon="clean.png")
         addActions(self.toolbar, self.set_view_direction_to_my_action)
         addActions(self.toolbar, self.set_view_direction_to_mz_action)
         addActions(self.toolbar, self.set_view_direction_to_px_action)
@@ -154,7 +204,7 @@ class ViewWidget(QWidget):
     def _extract_polygon(self, PolyData, is_clean):
 
         self._contour_widget.EnabledOff()
-        print "Init Extracting"
+        print("Init Extracting")
 
         self.setCursor(QCursor(Qt.WaitCursor))
         QApplication.processEvents()
@@ -190,7 +240,7 @@ class ViewWidget(QWidget):
         else:
             extractGeometry = vtkExtractGeometry()
 
-        extractGeometry.SetInput(PolyData)
+        extractGeometry.SetInputData(PolyData)
         extractGeometry.SetImplicitFunction(tip)
 
         if is_clean:
@@ -219,7 +269,7 @@ class ViewWidget(QWidget):
         self.extract_action.setEnabled(False)
         self.clean_action.setEnabled(False)
 
-        print "End Extracting"
+        print("End Extracting")
         return filter.GetOutput()
 
     def extract_points(self):

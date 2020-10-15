@@ -5,8 +5,8 @@ import numpy as np
 from vtk import vtkPolyData, vtkPoints, vtkCellArray,  vtkTriangle
 from vtk.util.numpy_support import vtk_to_numpy, numpy_to_vtk, get_numpy_array_type, get_vtk_to_numpy_typemap, \
     numpy_to_vtkIdTypeArray
-from vtk.vtkCommonPython import vtkPoints, VTK_UNSIGNED_CHAR
-from vtk.vtkFilteringPython import vtkCellArray, vtkPolyData
+from vtk import vtkPoints, VTK_UNSIGNED_CHAR
+from vtk import vtkCellArray, vtkPolyData
 
 
 def get_polydata_from(points, tr_re):

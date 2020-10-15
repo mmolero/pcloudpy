@@ -2,7 +2,7 @@
 Class that define a normal estimation method based on vtkPointSetNormalsEstimation by David Doria
 """
 __all__ = ["vtkPointSetNormalsEstimation"]
-from base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 
 import numpy as np
 from vtk import vtkPolyDataAlgorithm, vtkFloatArray, vtkKdTree, vtkPlane, vtkPolyData, vtkIdList

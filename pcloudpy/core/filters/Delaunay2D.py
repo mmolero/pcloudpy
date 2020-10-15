@@ -2,7 +2,7 @@
 
 
 from vtk import vtkDelaunay2D, vtkPolyData
-from base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 
 class  Delaunay2D(FilterBase):
     """

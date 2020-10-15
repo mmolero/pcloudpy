@@ -1,1 +1,1 @@
-from gui import app
+from pcloudpy.gui import app

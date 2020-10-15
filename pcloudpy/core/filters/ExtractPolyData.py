@@ -2,7 +2,7 @@
 
 """
 from vtk import vtkExtractUnstructuredGrid, vtkGeometryFilter, vtkAppendFilter,  vtkPolyData, vtkCleanPolyData
-from base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 
 class ExtractPolyData(FilterBase):
     """

@@ -1,11 +1,13 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
-from PySide.QtCore import *
-from PySide.QtGui import *
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal as Signal
 
 from ..resources_rc import *
-from toolboxTreeWidgetItem import ToolBoxTreeWidgetItem
-from toolboxStandardItem import ToolboxStandardItem
+from .toolboxTreeWidgetItem import ToolBoxTreeWidgetItem
+from .toolboxStandardItem import ToolboxStandardItem
 
 
 class ToolBoxesWidget(QWidget):
@@ -40,7 +42,7 @@ class ToolBoxesWidget(QWidget):
             for child in data[key]:
                 item_child = ToolboxStandardItem()
                 item_child.setText(child)
-                print child
+                print(child)
                 d = data[key][child]
                 item_child.setEnabled(int(d['enabled']))
                 item_child.setMetadata(d)
@@ -48,7 +50,8 @@ class ToolBoxesWidget(QWidget):
 
         self.tree.setModel(model)
 
-        self.connect(self.tree.selectionModel(), SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.select_item)
+        ##self.connect(self.tree.selectionModel(), SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.select_item)
+        self.tree.selectionModel().selectionChanged.connect(self.select_item)
 
 
     def get_current_item(self):

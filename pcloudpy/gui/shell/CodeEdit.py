@@ -62,7 +62,9 @@ class CodeEdit(QWidget):
     codeRequested = Signal(str)
 
     def file_run(self):
-        self.codeRequested.emit(self.python_editor.document().toPlainText())
+        pass
+        #self.codeRequested.emit(self.python_editor.document().toPlainText())
+
 
     def file_open(self):
         filters = "*.py"

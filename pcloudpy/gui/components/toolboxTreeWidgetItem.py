@@ -1,7 +1,8 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
-from PySide.QtCore import *
-from PySide.QtGui import *
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class ToolBoxTreeWidgetItem(QTreeWidgetItem):
     def __init__(self, parent=None,  type=QTreeWidgetItem.UserType + 2):

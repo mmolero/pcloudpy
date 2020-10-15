@@ -1,8 +1,13 @@
 
 __all__ = ['AppObject']
 
-from PySide.QtCore import QObject, Signal
-from ManagerLayer import Layer
+
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal as Signal
+
+from pcloudpy.gui.ManagerLayer import Layer
 
 class AppObject(object):
     """

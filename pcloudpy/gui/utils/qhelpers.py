@@ -2,8 +2,12 @@
 """
 
 import collections
-from PySide.QtCore import *
-from PySide.QtGui import *
+
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal as Signal
+
 
 
 def read_file(filename):
@@ -41,7 +45,8 @@ def createAction(parent, text, slot=None, shortcut=None, icon=None, tip=None, ch
         action.setToolTip(tip)
         action.setStatusTip(tip)
     if slot is not None:
-        parent.connect(action, SIGNAL(signal), slot)
+        print("REVIEW****", parent)
+        #parent.connect(action, SIGNAL(signal), slot)
     if checkable:
         action.setCheckable(True)
     return action

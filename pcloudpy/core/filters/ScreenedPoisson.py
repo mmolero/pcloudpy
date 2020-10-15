@@ -1,6 +1,6 @@
 import numpy as np
 from vtk import vtkPolyData
-from base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 from ..io.converters import get_points_normals_from, get_polydata_from
 
 from pypoisson import poisson_reconstruction

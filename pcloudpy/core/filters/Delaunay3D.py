@@ -1,6 +1,6 @@
 from vtk import vtkDelaunay3D, vtkGeometryFilter, vtkTriangleFilter, vtkPolyData
 
-from base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 
 class  Delaunay3D(FilterBase):
     """

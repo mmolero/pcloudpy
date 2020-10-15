@@ -23,7 +23,7 @@ class ReaderXYZ(PointsCloudBase):
         """
         df = pd.read_csv(self.filename_, sep=' ')
         #export to numpy array
-        self.data_ = df.as_matrix()
+        self.data_ = df.to_numpy()
 
 
 

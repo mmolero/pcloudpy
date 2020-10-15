@@ -49,7 +49,7 @@ class DataBase(object):
         Gets Container
         """
         if self.type_ in (DataType.POLYDATA, DataType.POINTCLOUD):
-            print "get data"
+            print("get data")
             return self.get_polydata()
         elif self.type_ == DataType.IMAGEDATA:
             return self.get_imagedata()

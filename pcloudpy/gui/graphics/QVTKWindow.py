@@ -1,8 +1,9 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
-from PySide.QtCore import *
-from PySide.QtGui import *
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
-from QVTKWidget import QVTKWidget
+from pcloudpy.gui.graphics.QVTKWidget import QVTKWidget
 
 class QVTKMainWindow(QMainWindow):
     def __init__(self, parent = None):

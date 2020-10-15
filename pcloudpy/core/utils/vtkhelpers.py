@@ -11,7 +11,7 @@ from vtk import vtkImageActor, vtkImageData, vtkDataSetMapper
 
 def actor_from_unstructuredgrid(data):
     mapper = vtkDataSetMapper()
-    mapper.SetInput(data)
+    mapper.SetInputData(data)
     actor = vtkActor()
     actor.SetMapper(mapper)
     return actor
@@ -22,7 +22,7 @@ def actor_from_polydata(PolyData):
     Returns the VTK Actor from vtkPolyData Structure
     """
     mapper = vtkPolyDataMapper()
-    mapper.SetInput(PolyData)
+    mapper.SetInputData(PolyData)
     actor = vtkActor()
     actor.SetMapper(mapper)
     #actor.GetProperty().SetPointSize(2)
@@ -30,7 +30,7 @@ def actor_from_polydata(PolyData):
 
 def actor_from_imagedata(imagedata):
     actor = vtkImageActor()
-    actor.SetInput(imagedata)
+    actor.SetInputData(imagedata)
     actor.InterpolateOff()
     return actor
 

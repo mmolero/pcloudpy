@@ -1,12 +1,15 @@
-from PySide import QtGui
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal as Signal
 
-class LineEdit(QtGui.QLineEdit):
+class LineEdit(QLineEdit):
      def __init__(self, parent=None):
         super(LineEdit, self).__init__(parent)
         self.setMaximumWidth(60)
         self.setText(str(0))
 
-class SpinBox(QtGui.QSpinBox):
+class SpinBox(QSpinBox):
     def __init__(self, parent=None):
         super(SpinBox, self).__init__(parent)
 
@@ -19,7 +22,7 @@ class SpinBox(QtGui.QSpinBox):
         return self.value()
 
 
-class DoubleSpinBox(QtGui.QDoubleSpinBox):
+class DoubleSpinBox(QDoubleSpinBox):
     def __init__(self, parent=None):
         super(DoubleSpinBox, self).__init__(parent)
 
@@ -32,7 +35,7 @@ class DoubleSpinBox(QtGui.QDoubleSpinBox):
         return self.value()
 
 
-class CheckBox(QtGui.QCheckBox):
+class CheckBox(QCheckBox):
     def __init__(self, parent=None):
         super(CheckBox, self).__init__(parent)
 
@@ -42,7 +45,7 @@ class CheckBox(QtGui.QCheckBox):
     def get_values(self):
         return self.isChecked()
 
-class Extent(QtGui.QWidget):
+class Extent(QWidget):
 
     def __init__(self, parent=None):
         super(Extent, self).__init__(parent)
@@ -54,18 +57,18 @@ class Extent(QtGui.QWidget):
         self.zmin_lineedit = LineEdit()
         self.zmax_lineedit = LineEdit()
 
-        grid = QtGui.QGridLayout()
-        grid.addWidget(QtGui.QLabel("xmin"), 0,0)
+        grid = QGridLayout()
+        grid.addWidget(QLabel("xmin"), 0,0)
         grid.addWidget(self.xmin_lineedit, 0,1)
-        grid.addWidget(QtGui.QLabel("xmax"), 0,2)
+        grid.addWidget(QLabel("xmax"), 0,2)
         grid.addWidget(self.xmax_lineedit, 0,3)
-        grid.addWidget(QtGui.QLabel("ymin"), 1,0)
+        grid.addWidget(QLabel("ymin"), 1,0)
         grid.addWidget(self.ymin_lineedit, 1,1)
-        grid.addWidget(QtGui.QLabel("ymax"), 1,2)
+        grid.addWidget(QLabel("ymax"), 1,2)
         grid.addWidget(self.ymax_lineedit, 1,3)
-        grid.addWidget(QtGui.QLabel("zmin"), 2,0)
+        grid.addWidget(QLabel("zmin"), 2,0)
         grid.addWidget(self.zmin_lineedit, 2,1)
-        grid.addWidget(QtGui.QLabel("zmax"),2,2 )
+        grid.addWidget(QLabel("zmax"),2,2 )
         grid.addWidget(self.zmax_lineedit, 2,3)
 
         self.setLayout(grid)

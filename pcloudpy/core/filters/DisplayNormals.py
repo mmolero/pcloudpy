@@ -2,7 +2,7 @@ from vtk import vtkArrowSource, vtkGlyph3D, vtkPolyData
 from vtk import vtkRenderer, vtkRenderWindowInteractor, vtkPolyDataMapper, vtkActor, vtkRenderWindow
 
 
-from .base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 
 class DisplayNormals(FilterBase):
 

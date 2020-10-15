@@ -1,12 +1,12 @@
 #Author: Miguel Molero <miguel.molero@gmail.com>
 
 import sys
-from PySide.QtGui import *
-from PySide.QtCore import *
-from matplotlib import rcParams
-rcParams['backend.qt4']='PySide'
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+
 import time
-import resources_rc
+from pcloudpy.gui.resources_rc import *
 
 sys.setrecursionlimit(140000)
 
@@ -21,7 +21,7 @@ def run():
     splash.setMask(splash_pix.mask())
     splash.show()
 
-    from MainWindow import MainWindow
+    from pcloudpy.gui.MainWindow import MainWindow
     app.processEvents()
 
     win = MainWindow()

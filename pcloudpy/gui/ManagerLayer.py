@@ -93,13 +93,13 @@ if __name__== '__main__':
     manager = ManagerLayer()
 
     layer1 = Layer("layer")
-    print isinstance(layer1, Layer)
+    print(isinstance(layer1, Layer))
     layer2 = Layer("layer")
 
     manager += layer1
     manager += layer2
 
-    print manager._layers
+    print(manager._layers)
 
-    print manager.pop(1)
-    print manager._layers
+    print(manager.pop(1))
+    print(manager._layers)

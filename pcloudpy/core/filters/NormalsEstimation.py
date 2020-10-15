@@ -7,7 +7,7 @@ import numpy as np
 from scipy.linalg import eigh
 from sklearn.neighbors import NearestNeighbors
 
-from base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 from ..io.converters import numpy_from_polydata, copy_polydata_add_normals
 
 

@@ -9,7 +9,7 @@ from vtk import vtkSphereSource, vtkXMLPolyDataWriter, vtkVertexGlyphFilter
 from sklearn.neighbors import KDTree
 from ..utils.vtkhelpers import actor_from_imagedata, actor_from_polydata
 from ..io.converters import numpy_from_polydata, polydata_from_numpy
-from base import FilterBase
+from pcloudpy.core.filters.base import FilterBase
 
 
 class vtkPointSetOutlierEstimation(FilterBase):

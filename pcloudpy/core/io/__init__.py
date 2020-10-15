@@ -1,8 +1,8 @@
-from ReaderXYZ import ReaderXYZ
-from ReaderLAS import ReaderLAS
-from ReaderTIFF import ReaderTIFF
-from ReaderPLY import ReaderPLY
-from ReaderVTP import ReaderVTP
+from pcloudpy.core.io.ReaderXYZ import ReaderXYZ
+from pcloudpy.core.io.ReaderLAS import ReaderLAS
+from pcloudpy.core.io.ReaderTIFF import ReaderTIFF
+from pcloudpy.core.io.ReaderPLY import ReaderPLY
+from pcloudpy.core.io.ReaderVTP import ReaderVTP
 
 __all__ = ['ReaderXYZ', 'ReaderLAS', 'ReaderTIFF', 'ReaderPLY', 'ReaderVTP']
 

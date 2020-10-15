@@ -7,13 +7,15 @@ MainWindow Class
 import os
 from collections import OrderedDict
 
-from PySide.QtCore import *
-from PySide.QtGui import *
+from PyQt5.QtCore import  *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import pyqtSignal as Signal
 
-from components.ViewWidget import ViewWidget
-from ManagerLayer import Layer, ManagerLayer
+from pcloudpy.gui.components.ViewWidget import ViewWidget
+from pcloudpy.gui.ManagerLayer import Layer, ManagerLayer
 
-from MainWindowBase import MainWindowBase
+from pcloudpy.gui.MainWindowBase import MainWindowBase
 
 from ..core import io as IO
 from ..core import filters as Filters
@@ -45,7 +47,7 @@ class MainWindow(MainWindowBase):
         self.datasets_widget.currentItemChanged.connect(self.manager_datasets)
         self.datasets_widget.itemDeleted.connect(self.delete_dataset)
         self.datasets_widget.tree.clicked.connect(self.set_current_dataset)
-        self.connect(self.datasets_widget.tree.selectionModel(), SIGNAL("selectionChanged(QItemSelection, QItemSelection)"), self.select_item)
+        self.datasets_widget.tree.selectionModel().selectionChanged.connect(self.select_item)
         self.datasets_widget.itemCloneRequested.connect(self.clone_dataset)
         self.datasets_widget.filterRequested.connect(self.apply_filter)
 
@@ -125,7 +127,7 @@ class MainWindow(MainWindowBase):
         item = self.toolboxes_widget.get_current_item()
         d = OrderedDict(item.metadata())
         #
-        if not d.has_key('type'):
+        if not "type" in d:
             return
 
         if d['type'] == 'reader':
@@ -152,7 +154,7 @@ class MainWindow(MainWindowBase):
         item = self.toolboxes_widget.get_current_item()
         d = OrderedDict(item.metadata())
 
-        if not d.has_key('type'):
+        if not "type" in d:
             return
 
         if d['type'] == 'reader':
@@ -179,12 +181,9 @@ class MainWindow(MainWindowBase):
         self.datasets_widget.set_enable_filter()
 
     def apply_filter(self, index):
-
         self.setCursor(Qt.WaitCursor)
         QApplication.processEvents()
         QApplication.processEvents()
-
-
         layer = self.datasets_widget.current_item.get_current_view().manager_layer[index]
         current_view = layer.get_current_view()
         layer_clone = layer.copy()
