@@ -102,7 +102,7 @@ def widget_generator(func, parms, text="", only_apply=False):
 
             if self.parms:
                 d = dict()
-                for (k,v) in self.parms.iteritems():
+                for (k,v) in self.parms.items():
                     if v['type'] =="Extent":
                         d[k] = self.findChild(customWidgets.Extent, k).get_extent()
                     else:

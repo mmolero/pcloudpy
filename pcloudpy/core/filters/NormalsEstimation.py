@@ -38,14 +38,14 @@ class NormalsEstimation(FilterBase):
 
     def update(self):
 
-        array_with_color  = numpy_from_polydata(self.input_)
+        array_with_color = numpy_from_polydata(self.input_)
         normals = np.empty_like(array_with_color[:,0:3])
         coord = array_with_color[:,0:3]
 
         neigh = NearestNeighbors(self.number_neighbors)
         neigh.fit(coord)
 
-        for i in xrange(0,len(coord)):
+        for i in range(0,len(coord)):
             #Determine the neighbours of point
             d = neigh.kneighbors(coord[i])
             #Add coordinates of neighbours , dont include center point to array. Determine coordinate by the index of the neighbours.
@@ -55,18 +55,15 @@ class NormalsEstimation(FilterBase):
             #Assign information content to each point i.e xyzb
             normals[i,0:3] = self.get_normals(y)
 
-
         self.output_ = copy_polydata_add_normals(self.input_, normals)
 
 
-
     def get_normals(self, XYZ):
-
         #The below code uses the PCA Eigen method to fit plane.
         #Get the covariance matrix
         average = np.sum(XYZ, axis=0)/XYZ.shape[0]
-        b  = np.transpose(XYZ - average)
-        cov     = np.cov(b)
+        b = np.transpose(XYZ - average)
+        cov = np.cov(b)
         #Get eigen val and vec
         e_val,e_vect = eigh(cov, overwrite_a=True, overwrite_b=True)
         norm =  e_vect[:,0]

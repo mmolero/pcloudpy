@@ -101,7 +101,10 @@ class StatisticalOutlierRemovalFilter(FilterBase):
         dx, idx_knn = kDTree.query(array[:, :], k = self.mean_k + 1)
         dx, idx_knn = dx[:,1:], idx_knn[:,1:]
 
-        distances = np.sum(dx, axis=1)/(self.mean_k - 1.0)
+        den = (self.mean_k - 1.0)
+        if den == 0:
+            den = 1
+        distances = np.sum(dx, axis=1)/den
         valid_distances = np.shape(distances)[0]
 
         #Estimate the mean and the standard deviation of the distance vector

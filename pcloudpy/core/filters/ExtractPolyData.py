@@ -36,7 +36,7 @@ class ExtractPolyData(FilterBase):
         appendFilter.Update()
 
         extractGrid = vtkExtractUnstructuredGrid()
-        extractGrid.SetInput(appendFilter.GetOutput())
+        extractGrid.SetInputData(appendFilter.GetOutput())
         extractGrid.SetExtent(self.extent[0], self.extent[1], self.extent[2],  self.extent[3],  self.extent[4], self.extent[5])
 
         geom = vtkGeometryFilter()

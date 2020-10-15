@@ -41,7 +41,7 @@ class  Delaunay3D(FilterBase):
 
     def update(self):
         delaunay = vtkDelaunay3D()
-        delaunay.SetInput(self.input_)
+        delaunay.SetInputData(self.input_)
         delaunay.SetTolerance(self.tolerance)
         delaunay.SetAlpha(self.alpha)
         delaunay.Update()

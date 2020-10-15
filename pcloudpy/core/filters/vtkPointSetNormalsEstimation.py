@@ -71,7 +71,7 @@ class vtkPointSetNormalsEstimation(FilterBase):
         kDTree.BuildLocatorFromPoints(self.input_.GetPoints())
 
         # Estimate the normal at each point.
-        for pointId  in xrange(0, self.input_.GetNumberOfPoints()):
+        for pointId  in range(0, self.input_.GetNumberOfPoints()):
 
             point = [0,0,0]
             self.input_.GetPoint(pointId, point)
@@ -107,7 +107,7 @@ class vtkPointSetNormalsEstimation(FilterBase):
         center = self.center_of_mass(points, idsToUse)
 
         a = np.zeros((3,3))
-        for pointId in xrange(0, dnumPoints):
+        for pointId in range(0, dnumPoints):
 
             x = np.asarray([0,0,0])
             xp = np.asarray([0,0,0])
@@ -134,7 +134,7 @@ class vtkPointSetNormalsEstimation(FilterBase):
         #Compute the center of mass of a set of points.
         point = np.asarray([0.0, 0.0, 0.0])
         center = np.asarray([0.0,0.0,0.0])
-        for i in xrange(0, idsToUse.GetNumberOfIds() ):
+        for i in range(0, idsToUse.GetNumberOfIds() ):
             points.GetPoint(idsToUse.GetId(i), point)
             center += point
 

@@ -50,11 +50,22 @@ class DatasetsWidget(QWidget):
         self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree.customContextMenuRequested.connect(self.treeContextMenu)
 
-        self.delete_dataset_action = createAction(self,"Delete Dataset", self.delete_dataset, icon="trash_24.png")
-        self.clone_dataset_action = createAction(self,"Clone Dataset", self.clone_dataset, icon="clone.png")
-        self.apply_filter_action = createAction(self,"Apply Filter to Dataset", self.apply_filter)
+        self.clone_dataset_action = QAction(QIcon(":/clone.png"), "Clone Dataset", self)
+        self.clone_dataset_action.setStatusTip("Clone Dataset")
+        self.clone_dataset_action.setToolTip("Clone Dataset")
+        self.clone_dataset_action.triggered.connect(self.clone_dataset)
 
-    #Onwn Signals
+        self.delete_dataset_action = QAction(QIcon(":/trash_24.png"), "Delete Dataset", self)
+        self.delete_dataset_action.setStatusTip("Delete Dataset")
+        self.delete_dataset_action.setToolTip("Delete Dataset")
+        self.delete_dataset_action.triggered.connect( self.delete_dataset)
+
+        self.apply_filter_action = QAction("Apply Filter to Dataset", self)
+        self.apply_filter_action.setStatusTip("Apply Filter to Dataset")
+        self.apply_filter_action.setToolTip("Apply Filter to Dataset")
+        self.apply_filter_action.triggered.connect(self.apply_filter)
+
+    #Own Signals
     currentItemChanged = Signal(int)
     itemDeleted = Signal(int)
     itemCloneRequested = Signal(int)

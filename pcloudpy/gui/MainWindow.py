@@ -203,7 +203,7 @@ class MainWindow(MainWindowBase):
                 QApplication.processEvents()
                 filter.update()
             except Exception as e:
-                q = QMessageBox(QMessageBox.Critical, "Error Message", e.message)
+                q = QMessageBox(QMessageBox.Critical, "Error Message", str(e))
                 q.setStandardButtons(QMessageBox.Ok)
                 q.exec_()
                 self.setCursor(Qt.ArrowCursor)

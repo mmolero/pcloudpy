@@ -27,6 +27,7 @@ class FilterWidget(QScrollArea):
         del widget
 
     def apply_widget(self):
+        print("apply")
         self.filterRequested.emit()
 
     def get_parms(self):

@@ -25,7 +25,7 @@ class DisplayNormals(FilterBase):
 
         glyph = vtkGlyph3D()
         glyph.SetSourceConnection(arrow.GetOutputPort())
-        glyph.SetInput(self.input_)
+        glyph.SetInputData(self.input_)
         glyph.SetVectorModeToUseNormal()
         glyph.SetScaleFactor(0.1)
         #glyph.SetColorModeToColorByVector()

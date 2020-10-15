@@ -16,7 +16,6 @@ from pcloudpy.core.filters.base import FilterBase
 from ..io.converters import numpy_from_polydata, copy_polydata_add_normals
 
 
-
 class OrientedNormalsEstimation(FilterBase):
     """
      NormalEstimation filter estimates normals of a point cloud using PCA Eigen method to fit plane
@@ -54,7 +53,7 @@ class OrientedNormalsEstimation(FilterBase):
         neigh = NearestNeighbors(self.number_neighbors)
         neigh.fit(coord)
 
-        for i in xrange(0,len(coord)):
+        for i in range(0,len(coord)):
             #Determine the neighbours of point
             d = neigh.kneighbors(coord[i])
             #Add coordinates of neighbours , dont include center point to array. Determine coordinate by the index of the neighbours.
@@ -75,7 +74,7 @@ class OrientedNormalsEstimation(FilterBase):
         G = nx.Graph()
 
         #Add all points and there neighbours to graph, make the weight equal to the distance between points
-        for i in xrange(0,len(coord)):
+        for i in range(0,len(coord)):
 
             d = neigh.kneighbors(coord[i,:3])
             for c in range(1,self.number_neighbors):
